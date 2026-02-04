@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
+import { Zap } from "@/src/lib/icons";
 
 export function Navbar() {
   return (
@@ -15,10 +16,15 @@ export function Navbar() {
 
           {/* Navigation Items */}
           <div className="flex items-center gap-4">
-            <Button variant="secondary" asChild hoverFlip={true} hoverIcon={<></>}>
+            <Button variant="ghost" asChild>
               <Link href="#use-cases">Use cases</Link>
             </Button>
-            <Button variant="default" asChild>
+            <Button
+              variant="default"
+              hoverFlip={true}
+              hoverIcon={<Zap />}
+              asChild
+            >
               <Link href="#waitlist">Join Waitlist</Link>
             </Button>
           </div>
