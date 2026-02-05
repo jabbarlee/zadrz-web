@@ -218,7 +218,7 @@ export function ChatInterfaceMockup() {
                     className="flex justify-end items-end gap-2"
                   >
                     <div className="max-w-[75%]">
-                      <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
+                      <div className="bg-black rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
                         <div className="flex items-center gap-2 mb-2">
                           <Mic className="w-3.5 h-3.5 text-indigo-100" />
                           <span className="text-xs text-indigo-100 font-medium">
@@ -332,7 +332,7 @@ export function ChatInterfaceMockup() {
                     className="flex justify-end items-end gap-2"
                   >
                     <div className="max-w-[75%]">
-                      <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
+                      <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
                         <p className="text-base sm:text-lg text-white mb-2 leading-relaxed">
                           Analyze this financial report
                         </p>
@@ -340,7 +340,7 @@ export function ChatInterfaceMockup() {
                           <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="flex items-center gap-2 px-3 py-2.5 bg-white/15 backdrop-blur-sm rounded-lg mt-2 border border-white/10"
+                            className="flex items-center gap-2 px-3 py-2.5 bg-white/15 rounded-lg mt-2 border border-white/10"
                           >
                             <div className="p-1.5 bg-white/20 rounded">
                               <Google className="w-3.5 h-3.5" />
@@ -349,14 +349,14 @@ export function ChatInterfaceMockup() {
                               <p className="text-xs text-white font-medium truncate">
                                 Q3_Financials.pdf
                               </p>
-                              <p className="text-xs text-indigo-100">2.4 MB</p>
+                              <p className="text-xs text-blue-100">2.4 MB</p>
                             </div>
                           </motion.div>
                         )}
                       </div>
                       <div className="flex items-center justify-end gap-1 mt-1 px-2">
                         <span className="text-xs text-gray-600">2:36 PM</span>
-                        <CheckCheck className="w-3.5 h-3.5 text-indigo-500" />
+                        <CheckCheck className="w-3.5 h-3.5 text-blue-500" />
                       </div>
                     </div>
                   </motion.div>
@@ -447,14 +447,14 @@ export function ChatInterfaceMockup() {
                     className="flex justify-end items-end gap-2"
                   >
                     <div className="max-w-[75%]">
-                      <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
+                      <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
                         <p className="text-base sm:text-lg text-white leading-relaxed">
                           Analyze Q3 financial report
                         </p>
                       </div>
                       <div className="flex items-center justify-end gap-1 mt-1 px-2">
                         <span className="text-xs text-gray-600">2:37 PM</span>
-                        <CheckCheck className="w-3.5 h-3.5 text-indigo-500" />
+                        <CheckCheck className="w-3.5 h-3.5 text-purple-500" />
                       </div>
                     </div>
                   </motion.div>
@@ -558,14 +558,14 @@ export function ChatInterfaceMockup() {
                     className="flex justify-end items-end gap-2"
                   >
                     <div className="max-w-[75%]">
-                      <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
+                      <div className="bg-gradient-to-br from-orange-600 to-orange-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
                         <p className="text-base sm:text-lg text-white leading-relaxed">
                           Analyze the top trending news from Reddit
                         </p>
                       </div>
                       <div className="flex items-center justify-end gap-1 mt-1 px-2">
                         <span className="text-xs text-gray-600">2:38 PM</span>
-                        <CheckCheck className="w-3.5 h-3.5 text-indigo-500" />
+                        <CheckCheck className="w-3.5 h-3.5 text-orange-500" />
                       </div>
                     </div>
                   </motion.div>
@@ -664,7 +664,7 @@ export function ChatInterfaceMockup() {
                     className="flex justify-end items-end gap-2"
                   >
                     <div className="max-w-[75%]">
-                      <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
+                      <div className="bg-gradient-to-br from-rose-600 to-rose-700 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
                         <p className="text-base sm:text-lg text-white leading-relaxed">
                           Sort my last 100 emails for spam and summarize the
                           important ones
@@ -672,7 +672,7 @@ export function ChatInterfaceMockup() {
                       </div>
                       <div className="flex items-center justify-end gap-1 mt-1 px-2">
                         <span className="text-xs text-gray-600">2:39 PM</span>
-                        <CheckCheck className="w-3.5 h-3.5 text-indigo-500" />
+                        <CheckCheck className="w-3.5 h-3.5 text-rose-500" />
                       </div>
                     </div>
                   </motion.div>
