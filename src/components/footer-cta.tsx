@@ -53,7 +53,7 @@ export function FooterCTA() {
           {/* Headline */}
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground px-2">
-              Ready to automate?
+              Upgrade your life and work with <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">ZadrBot</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Join the waitlist for early access. No credit card required. No
@@ -106,28 +106,20 @@ export function FooterCTA() {
               </svg>
               <span>Setup in under 2 minutes</span>
             </div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-green-500 sm:w-4 sm:h-4 flex-shrink-0"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>Cancel anytime</span>
-            </div>
           </div>
 
           {/* Footer Links */}
           <div className="pt-8 sm:pt-10 md:pt-12 border-t border-border/50 mt-8 sm:mt-10 md:mt-12">
             <div className="flex flex-col items-center justify-center gap-4 sm:gap-6">
+              <div className="w-10 h-10 flex items-center justify-center p-1">
+                <img
+                  src="/logo_zadrz.png"
+                  alt="Zadrz Logo"
+                  width={30}
+                  height={30}
+                  className="w-full h-full"
+                />
+              </div>
               {/* Logo */}
               <div className="text-lg sm:text-xl font-semibold tracking-tight text-foreground">
                 Zadrz
