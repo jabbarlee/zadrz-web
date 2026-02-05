@@ -68,7 +68,7 @@ export function OmniInputSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-12 sm:mb-14 md:mb-16 lg:mb-20"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 sm:mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-3 sm:mb-4 px-2">
             Speak it. Type it. Upload it.
           </h2>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-4xl mx-auto px-4">
