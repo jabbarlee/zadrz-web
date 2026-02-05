@@ -1,0 +1,142 @@
+{
+    "marquee_data": [
+      {
+        "id": "testimonial_01",
+        "handle": "@jonahships_",
+        "content": "Setup @openclaw by @steipete yesterday. All I have to say is, wow. First I was using my Claude Max sub and I used all of my limit quickly, so today I had my claw bot setup a proxy to route my CoPilot subscription as a API endpoint... The future is already here",
+        "source_reference": "[cite: 6]"
+      },
+      {
+        "id": "testimonial_02",
+        "handle": "@AryehDubois",
+        "content": "Tried Claw by @steipete. I tried to build my own AI assistant bots before, and I am very impressed how many hard things Claw gets right. Persistent memory, persona onboarding, comms integration, heartbeats... the end result is AWESOME",
+        "source_reference": "[cite: 7, 8, 9]"
+      },
+      {
+        "id": "testimonial_03",
+        "handle": "@markjaquith",
+        "content": "Why @openclaw is nuts: your context and skills live on YOUR computer, not a walled garden. It's open source... Proactive AF: cron jobs, reminders, background tasks. Memory is amazing..context persists 24/7",
+        "source_reference": "[cite: 12, 16]"
+      },
+      {
+        "id": "testimonial_04",
+        "handle": "@nateliason",
+        "content": "Yeah this was 1,000% worth it... autonomously running tests on my app and capturing errors through a sentry webhook then resolving them and opening PRS... The future is here.",
+        "source_reference": "[cite: 19, 20]"
+      },
+      {
+        "id": "testimonial_05",
+        "handle": "@nathanclark_",
+        "content": "A smart model with eyes and hands at a desk with keyboard and mouse. You message it like a coworker and it does everything a person could do with that Mac mini. That's what you have now.",
+        "source_reference": "[cite: 21, 22]"
+      },
+      {
+        "id": "testimonial_06",
+        "handle": "@nickvasiles",
+        "content": "OpenClaw is a 24/7 assistant with access to its own computer... All running 24/7 in the cloud with access to your files, Gmail, calendar, everything about you... That's the future, and we're living it today",
+        "source_reference": "[cite: 23, 24]"
+      },
+      {
+        "id": "testimonial_07",
+        "handle": "@davemorin",
+        "content": "At this point I don't even know what to call @openclaw. It is something new. After a few weeks in with it, This is the first time I have felt like I am living in the future since the launch of ChatGPT",
+        "source_reference": "[cite: 25, 26]"
+      },
+      {
+        "id": "testimonial_08",
+        "handle": "@cnakazawa",
+        "content": "OpenClaw is the first 'software' in ages for which I constantly check for new releases on GitHub. It's hard to put into words. It's a special project.",
+        "source_reference": "[cite: 27, 33]"
+      },
+      {
+        "id": "testimonial_09",
+        "handle": "@therno",
+        "content": "It's running my company.",
+        "source_reference": "[cite: 36]"
+      },
+      {
+        "id": "testimonial_10",
+        "handle": "@lycfyi",
+        "content": "After years of AI hype, I thought nothing could faze me. Then I installed @openclaw. From nervous 'hi what can you do?' to full throttle design, code review, taxes, PM, content pipelines... AI as teammate, not tool. The endgame of digital employees is here.",
+        "source_reference": "[cite: 37, 38]"
+      },
+      {
+        "id": "testimonial_11",
+        "handle": "@christinetyip",
+        "content": "Just shipped my first personal AI assistant. On WhatsApp. Builds my second brain while I chat. Memory moves across agents (Codex, Cursor, Manus, etc.)... Personal AI is getting real with @steipete's @openclaw",
+        "source_reference": "[cite: 39, 40]"
+      },
+      {
+        "id": "testimonial_12",
+        "handle": "@antonplex",
+        "content": "Just got my Winix air purifier. Claude code discovered and confirmed controls working within minutes. Now handing off to my @openclaw so it can handle controlling my room's air quality according to my biomarker optimization goals.",
+        "source_reference": "[cite: 43, 49, 50]"
+      },
+      {
+        "id": "testimonial_13",
+        "handle": "@Hormold",
+        "content": "My @openclaw accidentally started a fight with Lemonade Insurance because of a wrong interpretation of my response. After this email, they started to reinvestigate the case instead of instantly rejecting it. Thanks, AI.",
+        "source_reference": "[cite: 52]"
+      },
+      {
+        "id": "testimonial_14",
+        "handle": "@AlbertMoral",
+        "content": "I just finished setting up @openclaw by @steipete on my Raspberry Pi with Cloudflare, and it feels magical. Built a website from my phone in minutes and connected WHOOP to quickly check my metrics and daily habits",
+        "source_reference": "[cite: 53, 54]"
+      },
+      {
+        "id": "testimonial_15",
+        "handle": "@snopoke",
+        "content": "I've been running OpenClaw on my laptop for a week now. Honestly it feels like it did to run Linux vs windows 20 years ago. You're in control, you can hack it and make it yours instead of relying on some tech giant.",
+        "source_reference": "[cite: 55, 56]"
+      },
+      {
+        "id": "testimonial_16",
+        "handle": "@dajaset",
+        "content": "I got up and running today with @openclaw and its been nothing short of an iPhone moment for me. Thanks @steipete for creating this first true personal assistant experience for us - it's magical!",
+        "source_reference": "[cite: 73, 74]"
+      },
+      {
+        "id": "testimonial_17",
+        "handle": "@Abhay08",
+        "content": "Me reading about @openclaw: 'this looks complicated'. Me 30 mins later: controlling Gmail, Calendar, WordPress, Hetzner from Telegram like a boss. Smooth as single malt.",
+        "source_reference": "[cite: 94, 95]"
+      },
+      {
+        "id": "testimonial_18",
+        "handle": "@sharoni_k",
+        "content": "Took literally 5 mins to set everything up. Started by asking 'what do you need to see my whoop data?'. Now it fetches directly from whoop and gives me updates, summaries.",
+        "source_reference": "[cite: 96, 97]"
+      },
+      {
+        "id": "testimonial_19",
+        "handle": "@xMikeMickelson",
+        "content": "i asked @openclaw to make a sora2 video and make it a bit edgy, it came back 5 mins later having figured out watermark removal, api keys, and a full workflow",
+        "source_reference": "[cite: 111, 112]"
+      },
+      {
+        "id": "testimonial_20",
+        "handle": "@Giebz",
+        "content": "OpenClaw > anything GPT will ever release. Most fun I've had building in my entire life.",
+        "source_reference": "[cite: 205]"
+      },
+      {
+        "id": "testimonial_21",
+        "handle": "@karpathy",
+        "content": "Lol, this is hilarious, troubling, and awesome",
+        "source_reference": "[cite: 270, 271]"
+      },
+      {
+        "id": "testimonial_22",
+        "handle": "@The_Global_Soul",
+        "content": "Absolutely fantastic. So addictive, fun, and actually useful.",
+        "source_reference": "[cite: 437, 438]"
+      },
+      {
+        "id": "testimonial_23",
+        "handle": "@mneves75",
+        "content": "Make yourself a favor and install it. We've barely begun to tap into the potential of personal assistants. There's no going back.",
+        "source_reference": "[cite: 584]"
+      }
+    ]
+  }

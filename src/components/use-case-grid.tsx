@@ -30,7 +30,10 @@ const YCombinator = ({ className }: { className?: string }) => (
 
 export function UseCaseGrid() {
   return (
-    <section className="relative py-16 sm:py-20 md:py-24 lg:py-[120px] px-4 overflow-hidden bg-background">
+    <section
+      id="use-cases"
+      className="relative py-16 sm:py-20 md:py-24 lg:py-[120px] px-4 overflow-hidden bg-background"
+    >
       <div className="container mx-auto max-w-7xl relative z-10">
         {/* Section Header */}
         <div className="text-center mb-10 sm:mb-12 md:mb-16">

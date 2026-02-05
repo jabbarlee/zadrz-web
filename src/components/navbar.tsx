@@ -16,7 +16,21 @@ export function Navbar() {
     setMobileMenuOpen(false);
   };
 
-  const handleUseCasesClick = () => {
+  const scrollToTestimonials = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const section = document.getElementById("testimonials");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+    setMobileMenuOpen(false);
+  };
+
+  const scrollToUseCases = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const section = document.getElementById("use-cases");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
     setMobileMenuOpen(false);
   };
 
@@ -32,9 +46,12 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation Items */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="#use-cases">Use cases</Link>
+          <div className="hidden md:flex items-center gap-2 lg:gap-4">
+            <Button variant="ghost" onClick={scrollToTestimonials}>
+              Testimonials
+            </Button>
+            <Button variant="ghost" onClick={scrollToUseCases}>
+              Use cases
             </Button>
             <Button
               variant="default"
@@ -90,13 +107,22 @@ export function Navbar() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 space-y-3 border-t border-border/50 pt-4">
-            <Button variant="ghost" asChild className="w-full justify-start">
-              <Link href="#use-cases" onClick={handleUseCasesClick}>
-                Use cases
-              </Link>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={scrollToTestimonials}
+            >
+              Testimonials
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={scrollToUseCases}
+            >
+              Use cases
             </Button>
             <Button variant="default" className="w-full" onClick={scrollToHero}>
-              <Zap className="mr-2" />
+              <Zap />
               Join Waitlist
             </Button>
           </div>
