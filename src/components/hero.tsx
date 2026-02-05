@@ -8,7 +8,7 @@ import { PlaceholdersAndVanishInput } from "@/src/components/ui/placeholders-and
 export function Hero() {
   const [email, setEmail] = useState("");
 
-  const useCases = ["Research", "Booking", "Scraping", "Automation"];
+  const useCases = ["Research", "Emails", "To-do lists", "Meetings", "Calendars", "Bookings"];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,8 +33,8 @@ export function Hero() {
 
         {/* Sub-headline with rotating use cases */}
         <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-muted-foreground mb-3 sm:mb-4 max-w-3xl">
-          Chat in any messenger for Research, Emails, To-do lists, Meetings,
-          Calendars, Bookings
+          Chat in any messenger for{" "}
+          <WordRotate words={useCases} className="text-primary font-semibold" />
         </p>
 
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 sm:mb-10 md:mb-12 max-w-2xl px-2">
