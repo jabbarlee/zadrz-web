@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 
 export function TaskComplete() {
   return (
-    <div className="h-full w-full bg-gradient-to-br from-white to-gray-50 flex items-center justify-center p-6">
-      <div className="w-full max-w-md space-y-4">
+    <div className="h-full w-full bg-gradient-to-br from-white to-gray-50 flex items-center justify-center p-6 relative overflow-hidden">
+      <div className="w-full max-w-md space-y-4 relative z-10">
         {/* User Message */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
@@ -40,20 +40,20 @@ export function TaskComplete() {
           </div>
         </motion.div>
 
-        {/* Result Card */}
+        {/* Result Chip */}
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.4 }}
-          className="bg-white rounded-xl shadow-md border border-gray-200 p-4"
+          className="flex justify-start"
         >
-          <div className="flex items-start gap-3">
+          <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-full px-3 py-1.5">
             {/* Checkmark */}
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center flex-shrink-0 shadow-sm">
+            <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="10"
+                height="10"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="white"
@@ -64,27 +64,10 @@ export function TaskComplete() {
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-
-            {/* Details */}
-            <div className="flex-1 space-y-2">
-              <h4 className="font-semibold text-gray-900 text-sm">
-                Task Complete
-              </h4>
-              <div className="space-y-1.5 text-xs">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Completed in</span>
-                  <span className="text-gray-900 font-medium">2.3s</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Actions</span>
-                  <span className="text-gray-900 font-medium">12</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Setup time</span>
-                  <span className="text-green-600 font-medium">0s</span>
-                </div>
-              </div>
-            </div>
+            {/* Text */}
+            <span className="text-xs font-medium text-green-700">
+              Task Complete • 2.3s • 12 actions • 0s setup
+            </span>
           </div>
         </motion.div>
       </div>
