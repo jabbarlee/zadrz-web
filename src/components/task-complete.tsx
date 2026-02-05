@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function TaskComplete() {
   return (
-    <div className="h-full w-full bg-gradient-to-br from-white to-gray-50 flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="h-full w-full bg-gradient-to-br from-indigo-50 via-purple-50/50 to-pink-50 flex items-center justify-center p-6 relative overflow-hidden">
       <div className="w-full max-w-md space-y-4 relative z-10">
         {/* User Message */}
         <motion.div
@@ -14,7 +14,7 @@ export function TaskComplete() {
           className="flex justify-end"
         >
           <div className="bg-primary text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%] shadow-sm">
-            <p className="text-sm">
+            <p className="text-lg">
               Research the top 5 AI coding tools and create a comparison table
             </p>
           </div>
@@ -34,7 +34,7 @@ export function TaskComplete() {
               </div>
               <span className="text-xs font-semibold text-gray-700">Zadrz</span>
             </div>
-            <p className="text-sm text-gray-700">
+            <p className="text-lg text-gray-700">
               Done! I've researched and compiled the comparison table for you.
             </p>
           </div>

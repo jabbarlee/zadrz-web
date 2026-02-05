@@ -150,7 +150,7 @@ export function PlaceholdersAndVanishInput({
   return (
     <form
       className={cn(
-        "w-full relative max-w-xl mx-auto bg-white dark:bg-zinc-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
+        "w-full relative max-w-xl mx-auto bg-white dark:bg-zinc-800 h-14 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
         value && "bg-gray-50"
       )}
       onSubmit={handleSubmit}
@@ -183,10 +183,10 @@ export function PlaceholdersAndVanishInput({
         disabled={!value || submitted}
         type="submit"
         className={cn(
-          "absolute right-2 top-1/2 z-50 -translate-y-1/2 h-8 w-8 rounded-full transition duration-200 flex items-center justify-center",
+          "absolute right-2.5 top-1/2 z-50 -translate-y-1/2 h-10 w-10 rounded-full transition duration-200 flex items-center justify-center",
           submitted
             ? "bg-green-500"
-            : "bg-black dark:bg-zinc-900 dark:disabled:bg-zinc-800 disabled:bg-gray-100"
+            : "bg-black dark:bg-zinc-900 dark:disabled:bg-zinc-800 disabled:bg-gray-200 disabled:opacity-60"
         )}
       >
         <AnimatePresence mode="wait">
@@ -197,8 +197,8 @@ export function PlaceholdersAndVanishInput({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="white"
@@ -214,31 +214,20 @@ export function PlaceholdersAndVanishInput({
               initial={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="text-gray-300"
+              className={cn(
+                !value || submitted ? "text-gray-400" : "text-white"
+              )}
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <motion.path
-                d="M5 12l14 0"
-                initial={{
-                  strokeDasharray: "50%",
-                  strokeDashoffset: "50%",
-                }}
-                animate={{
-                  strokeDashoffset: value ? 0 : "50%",
-                }}
-                transition={{
-                  duration: 0.3,
-                  ease: "linear",
-                }}
-              />
+              <path d="M5 12l14 0" />
               <path d="M13 18l6 -6" />
               <path d="M13 6l6 6" />
             </motion.svg>
@@ -248,7 +237,7 @@ export function PlaceholdersAndVanishInput({
 
       <div className="absolute inset-0 flex items-center rounded-full pointer-events-none">
         {!value && (
-          <p className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-10 text-left w-[calc(100%-2rem)] truncate">
+          <p className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-5 sm:pl-10 text-left w-[calc(100%-3.5rem)] truncate">
             {placeholder}
           </p>
         )}

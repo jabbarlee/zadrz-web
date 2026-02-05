@@ -24,23 +24,23 @@ export function Hero() {
     <AuroraBackground>
       <div className="relative z-10 flex flex-col items-center justify-center px-4 text-center">
         {/* Headline */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 max-w-6xl">
+        <p className="text-8xl font-bold tracking-tight mb-6 max-w-6xl">
           The power of{" "}
           <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
             Clawbot
           </span>
           <br />
           Without the configuration.
-        </h1>
+        </p>
 
         {/* Sub-headline with rotating use cases */}
-        <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-4 max-w-3xl">
+        <p className="text-4xl text-muted-foreground mb-4 max-w-3xl">
           Deploy autonomous AI agents for{" "}
           <WordRotate words={useCases} className="text-primary font-semibold" />
           .
         </p>
 
-        <p className="text-base sm:text-lg text-muted-foreground mb-12 max-w-2xl">
+        <p className="text-2xl text-muted-foreground mb-12 max-w-2xl">
           No API keys, no terminal, no Python. Just chat.
         </p>
 
