@@ -1,8 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import { Zap } from "@/src/lib/icons";
 
 export function Navbar() {
+  const scrollToHero = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-6 py-4">
@@ -23,9 +32,9 @@ export function Navbar() {
               variant="default"
               hoverFlip={true}
               hoverIcon={<Zap />}
-              asChild
+              onClick={scrollToHero}
             >
-              <Link href="#waitlist">Join Waitlist</Link>
+              Join Waitlist
             </Button>
           </div>
         </div>
