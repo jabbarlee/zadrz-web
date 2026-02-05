@@ -21,7 +21,7 @@ export function ContextMenuDock({ onSelect }: ContextMenuDockProps) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.95 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl"
+      className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg"
     >
       {menuItems.map((item, index) => {
         const Icon = item.icon;
@@ -31,14 +31,14 @@ export function ContextMenuDock({ onSelect }: ContextMenuDockProps) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.1, duration: 0.2 }}
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => onSelect?.(item.id as "drive" | "notion" | "upload")}
-            className="flex flex-col items-center justify-center gap-1.5 p-3 sm:p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all group"
+            className="flex flex-col items-center justify-center gap-1 p-2 sm:p-3 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-indigo-300 transition-all group"
             aria-label={item.label}
           >
-            <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white/80 group-hover:text-white transition-colors" />
-            <span className="text-xs text-white/60 group-hover:text-white/80 transition-colors whitespace-nowrap">
+            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-indigo-600 transition-colors" />
+            <span className="text-xs text-gray-600 group-hover:text-gray-900 transition-colors whitespace-nowrap font-medium">
               {item.label}
             </span>
           </motion.button>
