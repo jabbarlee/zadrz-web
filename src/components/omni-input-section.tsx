@@ -101,44 +101,31 @@ export function OmniInputSection() {
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <motion.div
+                <div
                   key={feature.title}
-                  initial={false}
-                  whileHover={{
-                    y: -5,
-                    transition: { duration: 0.3, ease: "easeOut" },
-                  }}
-                  className="group relative p-5 sm:p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-indigo-300 hover:shadow-xl transition-all duration-300 will-change-transform"
+                  className="relative p-5 sm:p-6 bg-white border-2 border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
                 >
-                  {/* Enhanced glow effect on hover */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-indigo-100/60 via-purple-100/60 to-pink-100/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Accent bar */}
-                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  <div className="relative z-10">
-                    {/* Icon */}
-                    <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 mb-4 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 border-2 border-indigo-200 group-hover:from-indigo-200 group-hover:to-purple-200 group-hover:border-indigo-400 group-hover:scale-105 transition-all duration-300 shadow-sm group-hover:shadow-lg will-change-transform">
-                      {typeof Icon === "function" && Icon.name === "Zap" ? (
-                        <div className="text-indigo-600 group-hover:text-indigo-700 transition-colors">
-                          <Icon />
-                        </div>
-                      ) : (
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600 group-hover:text-indigo-700 transition-colors" />
-                      )}
-                    </div>
-
-                    {/* Title with gradient on hover */}
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:via-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                      {feature.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-sm sm:text-base text-gray-600 group-hover:text-gray-800 transition-colors leading-relaxed">
-                      {feature.description}
-                    </p>
+                  {/* Icon */}
+                  <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 mb-4 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 border-2 border-indigo-200 shadow-sm">
+                    {typeof Icon === "function" && Icon.name === "Zap" ? (
+                      <div className="text-indigo-600">
+                        <Icon />
+                      </div>
+                    ) : (
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600" />
+                    )}
                   </div>
-                </motion.div>
+
+                  {/* Title */}
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
+                    {feature.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
               );
             })}
           </motion.div>
