@@ -28,10 +28,10 @@ const features = [
 
 export function OmniInputSection() {
   return (
-    <section className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden">
+    <section className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden will-change-transform">
       {/* Mesh gradient overlay */}
       <div
-        className="absolute inset-0 opacity-40"
+        className="absolute inset-0 opacity-40 pointer-events-none"
         style={{
           backgroundImage: `
             radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
@@ -43,7 +43,7 @@ export function OmniInputSection() {
 
       {/* Subtle grid pattern */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: `
             linear-gradient(to right, rgba(99, 102, 241, 0.1) 1px, transparent 1px),
@@ -54,18 +54,18 @@ export function OmniInputSection() {
       />
 
       {/* Floating subtle dots */}
-      <div className="absolute top-1/4 left-1/4 w-3 h-3 rounded-full bg-indigo-300/20 blur-sm" />
-      <div className="absolute top-3/4 right-1/4 w-4 h-4 rounded-full bg-purple-300/20 blur-sm" />
-      <div className="absolute top-1/2 left-1/3 w-2 h-2 rounded-full bg-pink-300/20 blur-sm" />
-      <div className="absolute bottom-1/4 right-1/3 w-3 h-3 rounded-full bg-indigo-300/20 blur-sm" />
+      <div className="absolute top-1/4 left-1/4 w-3 h-3 rounded-full bg-indigo-300/20 blur-sm pointer-events-none" />
+      <div className="absolute top-3/4 right-1/4 w-4 h-4 rounded-full bg-purple-300/20 blur-sm pointer-events-none" />
+      <div className="absolute top-1/2 left-1/3 w-2 h-2 rounded-full bg-pink-300/20 blur-sm pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/3 w-3 h-3 rounded-full bg-indigo-300/20 blur-sm pointer-events-none" />
 
       <div className="container mx-auto max-w-7xl relative z-10 px-4 sm:px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-12 sm:mb-14 md:mb-16 lg:mb-20"
         >
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 sm:mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
@@ -81,10 +81,10 @@ export function OmniInputSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left: Chat Interface Mockup */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="h-[500px] sm:h-[600px] lg:h-[700px]"
           >
             <ChatInterfaceMockup />
@@ -92,10 +92,10 @@ export function OmniInputSection() {
 
           {/* Right: Feature Cards */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="space-y-6 lg:space-y-8"
           >
             {features.map((feature, index) => {
@@ -103,19 +103,22 @@ export function OmniInputSection() {
               return (
                 <motion.div
                   key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                  className="group relative p-6 sm:p-8 bg-white/80 backdrop-blur-lg border border-gray-200 rounded-xl hover:bg-white hover:border-indigo-200 hover:shadow-lg transition-all"
+                  initial={false}
+                  whileHover={{
+                    y: -5,
+                    transition: { duration: 0.3, ease: "easeOut" },
+                  }}
+                  className="group relative p-5 sm:p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-indigo-300 hover:shadow-xl transition-all duration-300 will-change-transform"
                 >
-                  {/* Glow effect on hover */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-indigo-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {/* Enhanced glow effect on hover */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-indigo-100/60 via-purple-100/60 to-pink-100/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Accent bar */}
+                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   <div className="relative z-10">
                     {/* Icon */}
-                    <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 mb-4 sm:mb-5 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 border border-indigo-200 group-hover:from-indigo-200 group-hover:to-purple-200 group-hover:border-indigo-300 transition-all shadow-sm">
+                    <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 mb-4 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 border-2 border-indigo-200 group-hover:from-indigo-200 group-hover:to-purple-200 group-hover:border-indigo-400 group-hover:scale-105 transition-all duration-300 shadow-sm group-hover:shadow-lg will-change-transform">
                       {typeof Icon === "function" && Icon.name === "Zap" ? (
                         <div className="text-indigo-600 group-hover:text-indigo-700 transition-colors">
                           <Icon />
@@ -125,13 +128,13 @@ export function OmniInputSection() {
                       )}
                     </div>
 
-                    {/* Title */}
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
+                    {/* Title with gradient on hover */}
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:via-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                       {feature.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-sm sm:text-base text-gray-600 group-hover:text-gray-700 transition-colors leading-relaxed">
+                    <p className="text-sm sm:text-base text-gray-600 group-hover:text-gray-800 transition-colors leading-relaxed">
                       {feature.description}
                     </p>
                   </div>

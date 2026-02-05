@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Paperclip,
@@ -158,14 +158,14 @@ export function ChatInterfaceMockup() {
   }[currentState];
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full will-change-transform">
       <div
-        className={`absolute inset-0 bg-gradient-to-br ${gradientClass} blur-3xl opacity-30 transition-all duration-1000`}
+        className={`absolute inset-0 bg-gradient-to-br ${gradientClass} blur-3xl opacity-30 transition-all duration-1000 pointer-events-none`}
       />
 
-      <div className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-3xl overflow-hidden shadow-2xl h-full flex flex-col">
+      <div className="relative bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-2xl h-full flex flex-col will-change-contents">
         {/* Chat Header */}
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50/50 to-purple-50/50 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50/50 to-purple-50/50">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -193,14 +193,14 @@ export function ChatInterfaceMockup() {
         </div>
 
         {/* Chat Messages Area */}
-        <div className="flex-1 p-4 sm:p-6 space-y-4 overflow-y-auto bg-gradient-to-b from-gray-50/50 to-white/50">
+        <div className="flex-1 p-4 sm:p-6 space-y-4 overflow-y-auto bg-gradient-to-b from-gray-50/50 to-white/50 will-change-scroll">
           <div className="flex justify-center">
-            <span className="text-xs text-gray-600 px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full shadow-sm border border-gray-200">
+            <span className="text-xs text-gray-600 px-3 py-1 bg-white/80 rounded-full shadow-sm border border-gray-200">
               Today, 2:34 PM
             </span>
           </div>
 
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             {/* State A: Voice Command */}
             {currentState === "voice" && (
               <motion.div
@@ -208,6 +208,7 @@ export function ChatInterfaceMockup() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="space-y-4"
               >
                 {showUserMessage && (
@@ -760,7 +761,7 @@ export function ChatInterfaceMockup() {
         </div>
 
         {/* Chat Input Area */}
-        <div className="p-3 sm:p-4 border-t border-gray-200 bg-gradient-to-r from-indigo-50/30 to-purple-50/30 backdrop-blur-sm">
+        <div className="p-3 sm:p-4 border-t border-gray-200 bg-gradient-to-r from-indigo-50/30 to-purple-50/30">
           <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-white border border-gray-200 rounded-2xl shadow-sm">
             <motion.button
               whileHover={{ scale: 1.05 }}
