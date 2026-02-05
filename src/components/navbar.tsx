@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/src/components/ui/button";
 import { Zap } from "@/src/lib/icons";
@@ -39,7 +40,16 @@ export function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-10 h-10 flex items-center justify-center p-1">
+              <img
+                src="/logo_zadrz.png"
+                alt="Zadrz Logo"
+                width={30}
+                height={30}
+                className="w-full h-full"
+              />
+            </div>
             <span className="text-lg sm:text-xl font-semibold tracking-tight text-foreground">
               Zadrz
             </span>
