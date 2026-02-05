@@ -30,8 +30,14 @@ export function TaskComplete() {
         >
           <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm px-3 py-3 sm:px-4 sm:py-3.5 md:px-5 md:py-4 max-w-[90%] sm:max-w-[85%] shadow-sm space-y-2 sm:space-y-3">
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xs sm:text-sm font-bold flex-shrink-0">
-                Z
+              <div className="w-10 h-10 flex items-center justify-center p-1">
+                <img
+                  src="/logo_zadrz.png"
+                  alt="Zadrz Logo"
+                  width={30}
+                  height={30}
+                  className="w-full h-full"
+                />
               </div>
               <span className="text-xs sm:text-sm font-semibold text-gray-700">
                 Zadrz

@@ -169,10 +169,14 @@ export function ChatInterfaceMockup() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center ring-2 ring-indigo-500/20 shadow-lg">
-                  <span className="text-white text-sm sm:text-base font-bold">
-                    Z
-                  </span>
+                <div className="w-10 h-10 flex items-center justify-center p-1">
+                  <img
+                    src="/logo_zadrz.png"
+                    alt="Zadrz Logo"
+                    width={30}
+                    height={30}
+                    className="w-full h-full"
+                  />
                 </div>
                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white shadow-sm" />
               </div>
@@ -254,8 +258,14 @@ export function ChatInterfaceMockup() {
                     exit={{ opacity: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
                       <div className="flex gap-1">
@@ -297,8 +307,14 @@ export function ChatInterfaceMockup() {
                     animate={{ opacity: 1, x: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="max-w-[75%]">
                       <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-md">
@@ -369,8 +385,14 @@ export function ChatInterfaceMockup() {
                     exit={{ opacity: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
                       <div className="flex gap-1">
@@ -412,8 +434,14 @@ export function ChatInterfaceMockup() {
                     animate={{ opacity: 1, x: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="max-w-[75%]">
                       <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-md">
@@ -467,8 +495,14 @@ export function ChatInterfaceMockup() {
                     exit={{ opacity: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
                       <div className="flex gap-1">
@@ -510,8 +544,14 @@ export function ChatInterfaceMockup() {
                     animate={{ opacity: 1, x: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="max-w-[75%]">
                       <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-md space-y-3">
@@ -578,8 +618,14 @@ export function ChatInterfaceMockup() {
                     exit={{ opacity: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
                       <div className="flex gap-1">
@@ -621,8 +667,14 @@ export function ChatInterfaceMockup() {
                     animate={{ opacity: 1, x: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="max-w-[75%]">
                       <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-md space-y-3">
@@ -685,8 +737,14 @@ export function ChatInterfaceMockup() {
                     exit={{ opacity: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
                       <div className="flex gap-1">
@@ -728,8 +786,14 @@ export function ChatInterfaceMockup() {
                     animate={{ opacity: 1, x: 0 }}
                     className="flex justify-start items-end gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">Z</span>
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
                     </div>
                     <div className="max-w-[75%]">
                       <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-md space-y-3">
