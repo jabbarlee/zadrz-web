@@ -117,13 +117,13 @@ export function ChatInterfaceMockup() {
               setTimeout(() => {
                 setIsTyping(false);
                 setShowAgentResponse(true);
-              }, 1500);
-            }, 300);
+              }, 1000);
+            }, 200);
           }
-        }, 30);
+        }, 20);
 
         return () => clearInterval(typingInterval);
-      }, 1500);
+      }, 1000);
 
       return () => clearTimeout(timeout);
     } else if (currentState === "calendar") {
