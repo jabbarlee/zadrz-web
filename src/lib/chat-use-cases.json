@@ -1,0 +1,170 @@
+{
+  "useCases": [
+    {
+      "id": "voice",
+      "name": "Voice Command",
+      "gradient": "from-teal-500/10 via-cyan-500/10 to-transparent",
+      "userMessage": {
+        "type": "voice",
+        "content": "Check my Google Drive for the Q3 report and summarize the variance.",
+        "timestamp": "2:34 PM",
+        "hasVoiceWaveform": true
+      },
+      "agentResponse": {
+        "content": "Got it! I'll check your Google Drive for the Q3 report and analyze the variance for you. 📊",
+        "timestamp": "2:35 PM"
+      }
+    },
+    {
+      "id": "calendar",
+      "name": "Meeting Scheduling",
+      "gradient": "from-blue-500/10 via-sky-500/10 to-transparent",
+      "userMessage": {
+        "type": "text",
+        "content": "Schedule a 30-minute meeting with Sarah Chen and Mike Ross next week to discuss the Q4 roadmap",
+        "timestamp": "2:37 PM",
+        "bgColor": "from-blue-600 to-sky-600"
+      },
+      "agentResponse": {
+        "content": "📅 Meeting scheduled! I found a time that works for everyone.",
+        "timestamp": "2:37 PM",
+        "meetingDetails": {
+          "title": "Q4 Roadmap Discussion",
+          "dateTime": "Tuesday, Feb 11 • 2:00 PM - 2:30 PM",
+          "participants": [
+            {
+              "name": "Sarah Chen",
+              "initial": "S",
+              "color": "from-purple-400 to-purple-600"
+            },
+            {
+              "name": "Mike Ross",
+              "initial": "M",
+              "color": "from-green-400 to-green-600"
+            }
+          ]
+        },
+        "integration": {
+          "name": "Google Calendar",
+          "icon": "google",
+          "label": "Added to Google Calendar",
+          "bgColor": "bg-blue-50",
+          "borderColor": "border-blue-200"
+        }
+      }
+    },
+    {
+      "id": "context",
+      "name": "Context Upload",
+      "gradient": "from-blue-500/10 via-indigo-500/10 to-transparent",
+      "userMessage": {
+        "type": "text",
+        "content": "Find the cheapest flights to Tokyo in March",
+        "timestamp": "2:35 PM",
+        "bgColor": "from-indigo-600 to-indigo-700"
+      },
+      "agentResponse": {
+        "content": "I found several options. The cheapest is $680 on March 15th with a layover in Seattle.",
+        "timestamp": "2:36 PM",
+        "integration": {
+          "name": "Google Flights",
+          "icon": "google",
+          "label": "Resource used: Google Flights",
+          "bgColor": "bg-blue-50",
+          "borderColor": "border-blue-200"
+        }
+      }
+    },
+    {
+      "id": "execution",
+      "name": "Browser Automation",
+      "gradient": "from-purple-500/10 via-violet-500/10 to-transparent",
+      "userMessage": {
+        "type": "text",
+        "content": "Compare prices for MacBook Pro M3 across Amazon, Best Buy, and Apple Store",
+        "timestamp": "2:36 PM",
+        "bgColor": "from-purple-600 to-violet-600"
+      },
+      "agentResponse": {
+        "content": "Price comparison complete! Best Buy has the lowest price at $1,899 (save $200).",
+        "timestamp": "2:37 PM",
+        "statusMessages": [
+          "Agent initializing...",
+          "Browsing Drive...",
+          "Extracting Data..."
+        ]
+      }
+    },
+    {
+      "id": "todoist",
+      "name": "Todo List Management",
+      "gradient": "from-red-500/10 via-orange-500/10 to-transparent",
+      "userMessage": {
+        "type": "voice",
+        "content": "Add to my todo list: Call dentist at 2pm, buy groceries, finish the project report by Friday",
+        "timestamp": "2:36 PM",
+        "hasVoiceWaveform": true
+      },
+      "agentResponse": {
+        "content": "✅ Saved 3 tasks to your todo list for today!",
+        "timestamp": "2:36 PM",
+        "integration": {
+          "name": "Todoist",
+          "icon": "todoist",
+          "label": "Added to Todoist",
+          "bgColor": "bg-red-50",
+          "borderColor": "border-red-200"
+        },
+        "action": {
+          "label": "Open Todoist",
+          "bgColor": "bg-red-600",
+          "hoverColor": "hover:bg-red-700"
+        }
+      }
+    },
+    {
+      "id": "reddit",
+      "name": "Research & Aggregation",
+      "gradient": "from-orange-500/10 via-red-500/10 to-transparent",
+      "userMessage": {
+        "type": "text",
+        "content": "What are developers saying about the new React 19 features?",
+        "timestamp": "2:37 PM",
+        "bgColor": "from-orange-600 to-red-600"
+      },
+      "agentResponse": {
+        "content": "I analyzed 50+ discussions. Top sentiment: Excited about Server Components (78% positive), mixed on new hooks (60% positive).",
+        "timestamp": "2:38 PM",
+        "integration": {
+          "name": "Reddit",
+          "icon": "reddit",
+          "label": "Resource used: Reddit",
+          "bgColor": "bg-orange-50",
+          "borderColor": "border-orange-200"
+        }
+      }
+    },
+    {
+      "id": "email",
+      "name": "Email Management",
+      "gradient": "from-rose-500/10 via-pink-500/10 to-transparent",
+      "userMessage": {
+        "type": "text",
+        "content": "Sort my last 100 emails for spam and summarize the important ones",
+        "timestamp": "2:38 PM",
+        "bgColor": "from-rose-600 to-rose-700"
+      },
+      "agentResponse": {
+        "content": "Sorted! Found 23 spam emails (moved to trash). 5 important emails summarized below.",
+        "timestamp": "2:39 PM",
+        "integration": {
+          "name": "Gmail",
+          "icon": "gmail",
+          "label": "Resource used: Gmail",
+          "bgColor": "bg-rose-50",
+          "borderColor": "border-rose-200"
+        }
+      }
+    }
+  ]
+}

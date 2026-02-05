@@ -12,9 +12,26 @@ import {
 } from "lucide-react";
 import { VoiceWaveform } from "./voice-waveform";
 import { ContextMenuDock } from "./context-menu-dock";
-import { Google, Reddit, Gmail } from "@/src/lib/integration-icons";
+import { Google, Reddit, Gmail, Todoist } from "@/src/lib/integration-icons";
+import { Calendar } from "lucide-react";
+import useCasesData from "@/src/lib/chat-use-cases.json";
 
-type State = "voice" | "context" | "execution" | "reddit" | "email";
+type State =
+  | "voice"
+  | "context"
+  | "execution"
+  | "reddit"
+  | "email"
+  | "todoist"
+  | "calendar";
+
+// Map of integration icons
+const integrationIcons = {
+  google: Google,
+  reddit: Reddit,
+  gmail: Gmail,
+  todoist: Todoist,
+};
 
 export function ChatInterfaceMockup() {
   const [currentState, setCurrentState] = useState<State>("voice");
@@ -33,10 +50,12 @@ export function ChatInterfaceMockup() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentState((prev) => {
-        if (prev === "voice") return "context";
+        if (prev === "voice") return "calendar";
+        if (prev === "calendar") return "context";
         if (prev === "context") return "execution";
         if (prev === "execution") return "reddit";
-        if (prev === "reddit") return "email";
+        if (prev === "reddit") return "todoist";
+        if (prev === "todoist") return "email";
         return "voice";
       });
     }, 6000);
@@ -79,6 +98,44 @@ export function ChatInterfaceMockup() {
       }, 1500);
 
       return () => clearTimeout(timeout);
+    } else if (currentState === "todoist") {
+      const todoistText =
+        "Add to my todo list: Call dentist at 2pm, buy groceries, finish the project report by Friday";
+
+      setTimeout(() => setShowUserMessage(true), 300);
+
+      const timeout = setTimeout(() => {
+        let index = 0;
+        const typingInterval = setInterval(() => {
+          if (index <= todoistText.length) {
+            setTypedText(todoistText.slice(0, index));
+            index++;
+          } else {
+            clearInterval(typingInterval);
+            setTimeout(() => {
+              setIsTyping(true);
+              setTimeout(() => {
+                setIsTyping(false);
+                setShowAgentResponse(true);
+              }, 1500);
+            }, 300);
+          }
+        }, 30);
+
+        return () => clearInterval(typingInterval);
+      }, 1500);
+
+      return () => clearTimeout(timeout);
+    } else if (currentState === "calendar") {
+      setTimeout(() => setShowUserMessage(true), 300);
+
+      setTimeout(() => {
+        setIsTyping(true);
+        setTimeout(() => {
+          setIsTyping(false);
+          setShowAgentResponse(true);
+        }, 1800);
+      }, 500);
     } else if (currentState === "context") {
       setTimeout(() => setShowUserMessage(true), 300);
 
@@ -149,13 +206,14 @@ export function ChatInterfaceMockup() {
     }
   }, [currentState, fullText.length]);
 
-  const gradientClass = {
-    voice: "from-teal-500/10 via-cyan-500/10 to-transparent",
-    context: "from-blue-500/10 via-indigo-500/10 to-transparent",
-    execution: "from-purple-500/10 via-violet-500/10 to-transparent",
-    reddit: "from-orange-500/10 via-red-500/10 to-transparent",
-    email: "from-rose-500/10 via-pink-500/10 to-transparent",
-  }[currentState];
+  // Get current use case data
+  const currentUseCase = useCasesData.useCases.find(
+    (uc) => uc.id === currentState
+  );
+
+  const gradientClass =
+    currentUseCase?.gradient ||
+    "from-teal-500/10 via-cyan-500/10 to-transparent";
 
   return (
     <div className="relative w-full h-full will-change-transform">
@@ -332,7 +390,290 @@ export function ChatInterfaceMockup() {
               </motion.div>
             )}
 
-            {/* State B: Context Upload */}
+            {/* State B: Todoist Voice Command */}
+            {currentState === "todoist" && (
+              <motion.div
+                key="todoist-messages"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="space-y-4"
+              >
+                {showUserMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex justify-end items-end gap-2"
+                  >
+                    <div className="max-w-[75%]">
+                      <div className="bg-black rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Mic className="w-3.5 h-3.5 text-indigo-100" />
+                          <span className="text-xs text-indigo-100 font-medium">
+                            Voice Message
+                          </span>
+                        </div>
+                        <div className="mb-2 scale-90 origin-left">
+                          <VoiceWaveform />
+                        </div>
+                        {typedText && (
+                          <p className="text-base sm:text-lg text-white leading-relaxed">
+                            {typedText}
+                            <motion.span
+                              animate={{ opacity: [1, 0] }}
+                              transition={{ duration: 0.8, repeat: Infinity }}
+                              className="inline-block w-0.5 h-5 bg-white ml-1"
+                            />
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-end gap-1 mt-1 px-2">
+                        <span className="text-xs text-gray-600">2:36 PM</span>
+                        <CheckCheck className="w-3.5 h-3.5 text-indigo-500" />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {isTyping && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex justify-start items-end gap-2"
+                  >
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
+                      <div className="flex gap-1">
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: Infinity,
+                            delay: 0,
+                          }}
+                          className="w-2 h-2 bg-gray-400 rounded-full"
+                        />
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: Infinity,
+                            delay: 0.2,
+                          }}
+                          className="w-2 h-2 bg-gray-400 rounded-full"
+                        />
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: Infinity,
+                            delay: 0.4,
+                          }}
+                          className="w-2 h-2 bg-gray-400 rounded-full"
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {showAgentResponse && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex justify-start items-end gap-2"
+                  >
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
+                    </div>
+                    <div className="max-w-[75%]">
+                      <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-md">
+                        <p className="text-base sm:text-lg text-gray-800 leading-relaxed mb-3">
+                          ✅ Saved 3 tasks to your todo list for today!
+                        </p>
+                        <div className="flex items-center gap-2 pt-2 border-t border-gray-200">
+                          <div className="p-1.5 bg-red-50 rounded-lg border border-red-200">
+                            <Todoist className="w-4 h-4" />
+                          </div>
+                          <span className="text-xs text-gray-600 font-medium">
+                            Added to Todoist
+                          </span>
+                        </div>
+                        <button className="mt-3 w-full px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition-colors">
+                          Open Todoist
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-1 mt-1 px-2">
+                        <span className="text-xs text-gray-600">2:36 PM</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+
+            {/* State C: Calendar Meeting Scheduling */}
+            {currentState === "calendar" && (
+              <motion.div
+                key="calendar-messages"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="space-y-4"
+              >
+                {showUserMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex justify-end items-end gap-2"
+                  >
+                    <div className="max-w-[75%]">
+                      <div className="bg-gradient-to-br from-blue-600 to-sky-600 rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
+                        <p className="text-base sm:text-lg text-white leading-relaxed">
+                          Schedule a 30-minute meeting with Sarah Chen and Mike
+                          Ross next week to discuss the Q4 roadmap
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-end gap-1 mt-1 px-2">
+                        <span className="text-xs text-gray-600">2:37 PM</span>
+                        <CheckCheck className="w-3.5 h-3.5 text-blue-500" />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {isTyping && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex justify-start items-end gap-2"
+                  >
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
+                      <div className="flex gap-1">
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: Infinity,
+                            delay: 0,
+                          }}
+                          className="w-2 h-2 bg-gray-400 rounded-full"
+                        />
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: Infinity,
+                            delay: 0.2,
+                          }}
+                          className="w-2 h-2 bg-gray-400 rounded-full"
+                        />
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: Infinity,
+                            delay: 0.4,
+                          }}
+                          className="w-2 h-2 bg-gray-400 rounded-full"
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {showAgentResponse && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex justify-start items-end gap-2"
+                  >
+                    <div className="w-10 h-10 flex items-center justify-center p-1">
+                      <img
+                        src="/logo_zadrz.png"
+                        alt="Zadrz Logo"
+                        width={30}
+                        height={30}
+                        className="w-full h-full"
+                      />
+                    </div>
+                    <div className="max-w-[75%]">
+                      <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-md">
+                        <p className="text-base sm:text-lg text-gray-800 leading-relaxed mb-3">
+                          📅 Meeting scheduled! I found a time that works for
+                          everyone.
+                        </p>
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
+                          <div className="flex items-start gap-2 mb-2">
+                            <Calendar className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-semibold text-gray-900">
+                                Q4 Roadmap Discussion
+                              </p>
+                              <p className="text-xs text-gray-600 mt-1">
+                                Tuesday, Feb 11 • 2:00 PM - 2:30 PM
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 pt-2 border-t border-blue-200">
+                            <div className="flex -space-x-2">
+                              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white flex items-center justify-center text-xs font-bold text-white">
+                                S
+                              </div>
+                              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white flex items-center justify-center text-xs font-bold text-white">
+                                M
+                              </div>
+                            </div>
+                            <span className="text-xs text-gray-600 font-medium">
+                              Sarah Chen, Mike Ross
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 pt-2 border-t border-gray-200">
+                          <div className="p-1.5 bg-blue-50 rounded-lg border border-blue-200">
+                            <Google className="w-4 h-4" />
+                          </div>
+                          <span className="text-xs text-gray-600 font-medium">
+                            Added to Google Calendar
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 mt-1 px-2">
+                        <span className="text-xs text-gray-600">2:37 PM</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+
+            {/* State D: Context Upload */}
             {currentState === "context" && (
               <motion.div
                 key="context-messages"
