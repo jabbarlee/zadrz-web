@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Google, Reddit, LinkedIn } from '@/src/lib/integration-icons'
 
 export function TaskComplete() {
   return (
@@ -27,16 +28,44 @@ export function TaskComplete() {
           transition={{ duration: 0.4, delay: 0.2 }}
           className="flex justify-start"
         >
-          <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%] shadow-sm">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] shadow-sm space-y-3">
+            <div className="flex items-center gap-2">
               <div className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold">
                 Z
               </div>
               <span className="text-xs font-semibold text-gray-700">Zadrz</span>
             </div>
-            <p className="text-lg text-gray-700">
+            <p className="text-sm text-gray-700">
               Done! I've researched and compiled the comparison table for you.
             </p>
+
+            {/* Action Button */}
+            <button className="w-full px-3 py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary/90 transition-colors">
+              View Table
+            </button>
+
+            {/* Resources Used */}
+            <div className="pt-2 border-t border-gray-200">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-xs text-gray-500 font-medium">
+                  Resources used:
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <div className="inline-flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-full px-2 py-1">
+                  <Reddit className="w-3.5 h-3.5" />
+                  <span className="text-xs text-gray-600">Reddit</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-full px-2 py-1">
+                  <Google className="w-3.5 h-3.5" />
+                  <span className="text-xs text-gray-600">Google</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-full px-2 py-1">
+                  <LinkedIn className="w-3.5 h-3.5" />
+                  <span className="text-xs text-gray-600">LinkedIn</span>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
 
@@ -66,7 +95,7 @@ export function TaskComplete() {
             </div>
             {/* Text */}
             <span className="text-xs font-medium text-green-700">
-              Task Complete • 2.3s • 12 actions • 0s setup
+              Task Complete • 2.3s • 12 actions
             </span>
           </div>
         </motion.div>
