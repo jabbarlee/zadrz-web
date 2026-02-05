@@ -30,29 +30,29 @@ export function AntiTerminalSection() {
       />
 
       <div className="relative z-10">
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto max-w-6xl px-4 sm:px-6">
           {/* Section Header */}
-          <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-3 sm:mb-4 px-2">
               Stop fighting dependencies.
             </h2>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               See the difference between the old way and the Zadrz way.
             </p>
           </div>
 
-          {/* Labels Above Component */}
-          <div className="flex mb-6">
+          {/* Labels Above Component - Desktop */}
+          <div className="hidden md:flex mb-6">
             {/* Left Label - The Old Way */}
             <div className="w-1/2 flex items-center justify-center">
               <div className="text-center">
                 <p
-                  className="text-3xl font-bold mb-1"
+                  className="text-2xl lg:text-3xl font-bold mb-1"
                   style={{ color: "#a4161a" }}
                 >
                   The Old Way
                 </p>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-sm lg:text-lg text-muted-foreground">
                   Hours of setup, countless errors
                 </p>
               </div>
@@ -61,27 +61,51 @@ export function AntiTerminalSection() {
             <div className="w-1/2 flex items-center justify-center">
               <div className="text-center">
                 <p
-                  className="text-3xl font-bold mb-1"
+                  className="text-2xl lg:text-3xl font-bold mb-1"
                   style={{ color: "#25a244" }}
                 >
                   The Zadrz Way
                 </p>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-sm lg:text-lg text-muted-foreground">
                   Zero setup, instant results
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Two Column Layout */}
+          {/* Two Column Layout - Desktop / Stacked - Mobile */}
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
-            <div className="flex h-[600px]">
+            <div className="flex flex-col md:flex-row md:h-[600px]">
               {/* Left Side - Terminal Error */}
-              <div className="w-1/2 border-r border-border">
+              <div className="w-full md:w-1/2 md:border-r border-border">
+                {/* Mobile Label */}
+                <div className="md:hidden text-center py-4 border-b border-border bg-zinc-900">
+                  <p
+                    className="text-xl font-bold mb-1"
+                    style={{ color: "#a4161a" }}
+                  >
+                    The Old Way
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Hours of setup, countless errors
+                  </p>
+                </div>
                 <TerminalError />
               </div>
               {/* Right Side - Chat Interface */}
-              <div className="w-1/2">
+              <div className="w-full md:w-1/2">
+                {/* Mobile Label */}
+                <div className="md:hidden text-center py-4 border-b border-border bg-gradient-to-br from-indigo-50 via-purple-50/50 to-pink-50">
+                  <p
+                    className="text-xl font-bold mb-1"
+                    style={{ color: "#25a244" }}
+                  >
+                    The Zadrz Way
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Zero setup, instant results
+                  </p>
+                </div>
                 <TaskComplete />
               </div>
             </div>

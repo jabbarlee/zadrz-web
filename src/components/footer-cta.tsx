@@ -17,7 +17,7 @@ export function FooterCTA() {
   };
 
   return (
-    <section className="relative py-[120px] px-4 overflow-hidden bg-background border-t border-border">
+    <section className="relative py-16 sm:py-20 md:py-24 lg:py-[120px] px-4 overflow-hidden bg-background border-t border-border">
       {/* Subtle gradient background */}
       <div
         className="absolute inset-0 opacity-[0.4]"
@@ -49,20 +49,20 @@ export function FooterCTA() {
 
       <div className="container mx-auto max-w-4xl relative z-10">
         {/* Content */}
-        <div className="text-center space-y-8">
+        <div className="text-center space-y-6 sm:space-y-8">
           {/* Headline */}
-          <div className="space-y-4">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground">
+          <div className="space-y-3 sm:space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground px-2">
               Ready to automate?
             </h2>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Join the waitlist for early access. No credit card required. No
               setup time.
             </p>
           </div>
 
           {/* Waitlist Input */}
-          <div className="max-w-xl mx-auto">
+          <div className="max-w-xl mx-auto px-2">
             <PlaceholdersAndVanishInput
               placeholder="Enter your email for early access"
               onChange={handleChange}
@@ -71,53 +71,53 @@ export function FooterCTA() {
           </div>
 
           {/* Trust Indicators */}
-          <div className="flex flex-wrap items-center justify-center gap-6 pt-8 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 pt-6 sm:pt-8 text-xs sm:text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="14"
+                height="14"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-green-500"
+                className="text-green-500 sm:w-4 sm:h-4 flex-shrink-0"
               >
                 <polyline points="20 6 9 17 4 12" />
               </svg>
               <span>No credit card required</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="14"
+                height="14"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-green-500"
+                className="text-green-500 sm:w-4 sm:h-4 flex-shrink-0"
               >
                 <polyline points="20 6 9 17 4 12" />
               </svg>
               <span>Setup in under 2 minutes</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="14"
+                height="14"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-green-500"
+                className="text-green-500 sm:w-4 sm:h-4 flex-shrink-0"
               >
                 <polyline points="20 6 9 17 4 12" />
               </svg>
@@ -126,15 +126,15 @@ export function FooterCTA() {
           </div>
 
           {/* Footer Links */}
-          <div className="pt-12 border-t border-border/50 mt-12">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="pt-8 sm:pt-10 md:pt-12 border-t border-border/50 mt-8 sm:mt-10 md:mt-12">
+            <div className="flex flex-col items-center justify-center gap-4 sm:gap-6">
               {/* Logo */}
-              <div className="text-xl font-semibold tracking-tight text-foreground">
+              <div className="text-lg sm:text-xl font-semibold tracking-tight text-foreground">
                 Zadrz
               </div>
 
               {/* Links */}
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted-foreground">
                 <a
                   href="#use-cases"
                   className="hover:text-foreground transition-colors"
@@ -162,7 +162,7 @@ export function FooterCTA() {
               </div>
 
               {/* Copyright */}
-              <div className="text-sm text-muted-foreground">
+              <div className="text-xs sm:text-sm text-muted-foreground">
                 © 2026 Zadrz. All rights reserved.
               </div>
             </div>
