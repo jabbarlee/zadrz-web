@@ -32,15 +32,15 @@ export function UseCaseGrid() {
   return (
     <section
       id="use-cases"
-      className="relative py-16 sm:py-20 md:py-24 lg:py-[120px] px-4 overflow-hidden bg-background"
+      className="relative py-12 sm:py-20 md:py-24 lg:py-[120px] px-4 sm:px-6 overflow-hidden bg-background"
     >
       <div className="container mx-auto max-w-7xl relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-12 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-4 sm:mb-6 text-foreground px-2">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-5xl leading-tight sm:text-4xl md:text-3xl lg:text-4xl xl:text-7xl font-bold tracking-tight mb-6 sm:mb-8 max-w-6xl-2">
             Automate the boring stuff.
           </h2>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto px-4">
+          <p className="text-base leading-relaxed sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto px-2 sm:px-4">
             From scraping leads to booking flights. Zadrz navigates the web so
             you don't have to.
           </p>
@@ -50,7 +50,7 @@ export function UseCaseGrid() {
         <BentoGrid className="max-w-6xl mx-auto">
           {/* Card 1: Lead Generation - Large Card (spans 2 columns) */}
           <MagicCard
-            className="md:col-span-2 md:row-span-1 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
+            className="md:col-span-2 md:row-span-1 p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
             gradientColor="#0A66C2"
             gradientOpacity={0.15}
           >
@@ -113,7 +113,7 @@ export function UseCaseGrid() {
 
           {/* Card 2: Market Watch - Square Card */}
           <MagicCard
-            className="md:col-span-1 md:row-span-1 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
+            className="md:col-span-1 md:row-span-1 p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
             gradientColor="#333333"
             gradientOpacity={0.15}
           >
@@ -171,7 +171,7 @@ export function UseCaseGrid() {
 
           {/* Card 3: Travel Scout - Square Card */}
           <MagicCard
-            className="md:col-span-1 md:row-span-1 p-5 sm:p-6 md:p-8 flex flex-col justify-between"
+            className="md:col-span-1 md:row-span-1 p-4 sm:p-6 md:p-8 flex flex-col justify-between"
             gradientColor="#FF5A5F"
             gradientOpacity={0.15}
           >
@@ -227,29 +227,29 @@ export function UseCaseGrid() {
                 "Download all PDF invoices from Gmail and add to Sheets."
               </p>
               <div className="space-y-2 pt-3 border-t border-border/50">
-                <div className="flex items-center justify-between gap-2 sm:gap-4">
-                  <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+                  <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-wrap">
                     <span className="text-xs sm:text-sm font-medium text-muted-foreground truncate">
                       Processing complete
                     </span>
-                    <div className="inline-flex items-center gap-1 bg-green-500/10 border border-green-500/20 rounded-full px-1.5 sm:px-2 py-0.5">
+                    <div className="inline-flex items-center gap-1 bg-green-500/10 border border-green-500/20 rounded-full px-1.5 sm:px-2 py-0.5 shrink-0">
                       <span className="text-xs font-bold text-green-500 whitespace-nowrap">
                         $12.4K
                       </span>
                     </div>
                   </div>
-                  <span className="text-lg sm:text-xl md:text-2xl font-bold text-foreground flex-shrink-0">
+                  <span className="text-lg sm:text-xl md:text-2xl font-bold text-foreground shrink-0">
                     100%
                   </span>
                 </div>
                 <div className="w-full bg-neutral-200 dark:bg-neutral-800 rounded-full h-2 sm:h-2.5 overflow-hidden">
                   <div className="bg-gradient-to-r from-primary to-primary/80 h-full rounded-full w-full transition-all duration-1000 shadow-lg shadow-primary/20" />
                 </div>
-                <div className="flex items-center justify-between text-xs pt-1 gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs pt-1 gap-2">
                   <span className="text-primary font-bold truncate">
                     24 invoices • Feb 2026
                   </span>
-                  <button className="px-2 sm:px-3 py-1 sm:py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-500 text-xs font-semibold rounded-lg transition-colors border border-green-500/20 flex-shrink-0 whitespace-nowrap">
+                  <button className="px-2 sm:px-3 py-1.5 sm:py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-500 text-xs font-semibold rounded-lg transition-colors border border-green-500/20 shrink-0 whitespace-nowrap w-full sm:w-auto text-center">
                     Open Sheet
                   </button>
                 </div>
@@ -259,7 +259,7 @@ export function UseCaseGrid() {
 
           {/* Card 5: Social Media Monitor - Square Card */}
           <MagicCard
-            className="md:col-span-1 md:row-span-1 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
+            className="md:col-span-1 md:row-span-1 p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
             gradientColor="#1DA1F2"
             gradientOpacity={0.15}
           >
@@ -343,7 +343,7 @@ export function UseCaseGrid() {
 
           {/* Card 7: Content Aggregator - Square Card */}
           <MagicCard
-            className="md:col-span-1 md:row-span-1 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
+            className="md:col-span-1 md:row-span-1 p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
             gradientColor="#FF4500"
             gradientOpacity={0.15}
           >
@@ -399,24 +399,24 @@ export function UseCaseGrid() {
               </p>
               <div className="space-y-2 pt-3 border-t border-border/50">
                 <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                  <div className="bg-primary/5 border border-primary/10 rounded-lg p-1.5 sm:p-2">
-                    <div className="text-base sm:text-lg md:text-xl font-bold text-foreground">
+                  <div className="bg-primary/5 border border-primary/10 rounded-lg p-1.5 sm:p-2 min-w-0">
+                    <div className="text-sm sm:text-lg md:text-xl font-bold text-foreground">
                       12
                     </div>
                     <div className="text-xs text-muted-foreground truncate">
                       Meetings
                     </div>
                   </div>
-                  <div className="bg-green-500/5 border border-green-500/10 rounded-lg p-1.5 sm:p-2">
-                    <div className="text-base sm:text-lg md:text-xl font-bold text-foreground">
+                  <div className="bg-green-500/5 border border-green-500/10 rounded-lg p-1.5 sm:p-2 min-w-0">
+                    <div className="text-sm sm:text-lg md:text-xl font-bold text-foreground">
                       8h
                     </div>
                     <div className="text-xs text-muted-foreground truncate">
                       Saved
                     </div>
                   </div>
-                  <div className="bg-blue-500/5 border border-blue-500/10 rounded-lg p-1.5 sm:p-2">
-                    <div className="text-base sm:text-lg md:text-xl font-bold text-foreground">
+                  <div className="bg-blue-500/5 border border-blue-500/10 rounded-lg p-1.5 sm:p-2 min-w-0">
+                    <div className="text-sm sm:text-lg md:text-xl font-bold text-foreground">
                       100%
                     </div>
                     <div className="text-xs text-muted-foreground truncate">
@@ -433,7 +433,7 @@ export function UseCaseGrid() {
 
           {/* Card 9: WhatsApp Auto-Responder - Square Card */}
           <MagicCard
-            className="md:col-span-1 md:row-span-1 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
+            className="md:col-span-1 md:row-span-1 p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden"
             gradientColor="#25D366"
             gradientOpacity={0.15}
           >

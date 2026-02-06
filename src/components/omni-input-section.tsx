@@ -45,7 +45,7 @@ export function OmniInputSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-8 sm:mb-14 md:mb-16 lg:mb-20"
         >
-          <h2 className="text-[1.75rem] leading-tight sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-3 sm:mb-4 px-2">
+          <h2 className="text-5xl leading-tight sm:text-4xl md:text-3xl lg:text-4xl xl:text-7xl font-bold tracking-tight mb-6 sm:mb-8 max-w-6xl px-2">
             If you can explain it - Zadrz will do it.
           </h2>
           <p className="text-base leading-relaxed sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-4xl mx-auto px-4">
