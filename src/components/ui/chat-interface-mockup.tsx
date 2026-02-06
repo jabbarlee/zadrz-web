@@ -19,7 +19,7 @@ import {
   Todoist,
 } from "@/src/lib/icons/integration-icons";
 import { Calendar } from "lucide-react";
-import useCasesData from "@/src/lib/chat-use-cases.json";
+import useCasesData from "@/src/lib/data/chat-use-cases.json";
 
 type State =
   | "voice"

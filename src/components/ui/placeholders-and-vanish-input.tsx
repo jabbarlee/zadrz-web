@@ -8,10 +8,12 @@ export function PlaceholdersAndVanishInput({
   placeholder,
   onChange,
   onSubmit,
+  disabled = false,
 }: {
   placeholder: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
+  disabled?: boolean;
 }) {
   const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
@@ -164,7 +166,7 @@ export function PlaceholdersAndVanishInput({
       />
       <input
         onChange={(e) => {
-          if (!animating) {
+          if (!animating && !disabled) {
             setValue(e.target.value);
             onChange && onChange(e);
           }
@@ -175,14 +177,16 @@ export function PlaceholdersAndVanishInput({
         type="email"
         inputMode="email"
         autoComplete="email"
+        disabled={disabled}
         className={cn(
           "w-full relative text-base sm:text-lg md:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-5 sm:pl-10 pr-16 sm:pr-20",
-          animating && "text-transparent dark:text-transparent"
+          animating && "text-transparent dark:text-transparent",
+          disabled && "opacity-50 cursor-not-allowed"
         )}
       />
 
       <button
-        disabled={!value || submitted}
+        disabled={!value || submitted || disabled}
         type="submit"
         className={cn(
           "absolute right-2 sm:right-2.5 top-1/2 z-50 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 md:h-10 md:w-10 rounded-full transition duration-200 flex items-center justify-center active:scale-95",

@@ -1,7 +1,7 @@
 "use client";
 
 import { Marquee } from "@/src/components/ui/marquee";
-import testimonialsData from "@/src/lib/testimonials.json";
+import testimonialsData from "@/src/lib/data/testimonials.json";
 
 // Testimonial Card Component
 function TestimonialCard({
