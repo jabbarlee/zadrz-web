@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/src/components/ui/button";
-import { Zap } from "@/src/lib/icons";
+import { Zap } from "@/src/lib/icons/icons";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

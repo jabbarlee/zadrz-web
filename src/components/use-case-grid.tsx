@@ -14,7 +14,7 @@ import {
   Reddit,
   GitHub,
   Gmail,
-} from "@/src/lib/integration-icons";
+} from "@/src/lib/icons/integration-icons";
 
 // Y Combinator logo - simple Y in orange
 const YCombinator = ({ className }: { className?: string }) => (

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FileText, Upload } from "lucide-react";
-import { Google } from "@/src/lib/integration-icons";
+import { Google } from "@/src/lib/icons/integration-icons";
 
 interface ContextMenuDockProps {
   onSelect?: (type: "drive" | "notion" | "upload") => void;

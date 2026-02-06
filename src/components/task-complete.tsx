@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Google, Reddit, LinkedIn } from "@/src/lib/integration-icons";
+import { Google, Reddit, LinkedIn } from "@/src/lib/icons/integration-icons";
 
 export function TaskComplete() {
   return (

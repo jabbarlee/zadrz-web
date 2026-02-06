@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Mic, Database } from "lucide-react";
-import { Zap } from "@/src/lib/icons";
+import { Zap } from "@/src/lib/icons/icons";
 
 const features = [
   {

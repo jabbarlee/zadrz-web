@@ -12,7 +12,12 @@ import {
 } from "lucide-react";
 import { VoiceWaveform } from "./voice-waveform";
 import { ContextMenuDock } from "./context-menu-dock";
-import { Google, Reddit, Gmail, Todoist } from "@/src/lib/integration-icons";
+import {
+  Google,
+  Reddit,
+  Gmail,
+  Todoist,
+} from "@/src/lib/icons/integration-icons";
 import { Calendar } from "lucide-react";
 import useCasesData from "@/src/lib/chat-use-cases.json";
 

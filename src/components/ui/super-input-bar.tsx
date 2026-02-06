@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, Bot } from "lucide-react";
 import { VoiceWaveform } from "./voice-waveform";
 import { ContextMenuDock } from "./context-menu-dock";
-import { Google } from "@/src/lib/integration-icons";
+import { Google } from "@/src/lib/icons/integration-icons";
 
 type State = "voice" | "context" | "execution";
 
