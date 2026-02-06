@@ -222,8 +222,8 @@ export function ChatInterfaceMockup() {
       />
 
       <div className="relative bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-2xl h-full flex flex-col will-change-contents">
-        {/* Chat Header */}
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50/50 to-purple-50/50">
+        {/* Chat Header - compact on mobile */}
+        <div className="px-3 sm:px-6 py-2.5 sm:py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50/50 to-purple-50/50 shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -254,8 +254,8 @@ export function ChatInterfaceMockup() {
           </div>
         </div>
 
-        {/* Chat Messages Area */}
-        <div className="flex-1 p-4 sm:p-6 space-y-4 overflow-y-auto bg-gradient-to-b from-gray-50/50 to-white/50 will-change-scroll">
+        {/* Chat Messages Area - min-h-0 for flex shrink, compact on mobile to avoid scroll */}
+        <div className="flex-1 min-h-0 p-3 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto bg-gradient-to-b from-gray-50/50 to-white/50 will-change-scroll">
           <div className="flex justify-center">
             <span className="text-xs text-gray-600 px-3 py-1 bg-white/80 rounded-full shadow-sm border border-gray-200">
               Today, 2:34 PM
@@ -271,7 +271,7 @@ export function ChatInterfaceMockup() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="space-y-4"
+                className="space-y-3 sm:space-y-4"
               >
                 {showUserMessage && (
                   <motion.div
@@ -279,15 +279,15 @@ export function ChatInterfaceMockup() {
                     animate={{ opacity: 1, x: 0 }}
                     className="flex justify-end items-end gap-2"
                   >
-                    <div className="max-w-[75%]">
-                      <div className="bg-black rounded-2xl rounded-tr-md px-4 py-3 shadow-md">
-                        <div className="flex items-center gap-2 mb-2">
+                    <div className="max-w-[85%] sm:max-w-[75%]">
+                      <div className="bg-black rounded-2xl rounded-tr-md px-3 py-2.5 sm:px-4 sm:py-3 shadow-md">
+                        <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
                           <Mic className="w-3.5 h-3.5 text-indigo-100" />
                           <span className="text-xs text-indigo-100 font-medium">
                             Voice Message
                           </span>
                         </div>
-                        <div className="mb-2 scale-90 origin-left">
+                        <div className="mb-1.5 sm:mb-2 scale-75 sm:scale-90 origin-left">
                           <VoiceWaveform />
                         </div>
                         {typedText && (
@@ -414,7 +414,7 @@ export function ChatInterfaceMockup() {
                             Voice Message
                           </span>
                         </div>
-                        <div className="mb-2 scale-90 origin-left">
+                        <div className="mb-1.5 sm:mb-2 scale-75 sm:scale-90 origin-left">
                           <VoiceWaveform />
                         </div>
                         {typedText && (
@@ -1165,8 +1165,8 @@ export function ChatInterfaceMockup() {
           </AnimatePresence>
         </div>
 
-        {/* Chat Input Area */}
-        <div className="p-3 sm:p-4 border-t border-gray-200 bg-gradient-to-r from-indigo-50/30 to-purple-50/30">
+        {/* Chat Input Area - compact on mobile */}
+        <div className="p-2.5 sm:p-4 border-t border-gray-200 bg-gradient-to-r from-indigo-50/30 to-purple-50/30 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-white border border-gray-200 rounded-2xl shadow-sm">
             <motion.button
               whileHover={{ scale: 1.05 }}

@@ -5,7 +5,7 @@ import { ChatInterfaceMockup } from "./ui/chat-interface-mockup";
 
 export function OmniInputSection() {
   return (
-    <section className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden will-change-transform">
+    <section className="relative py-12 sm:py-24 md:py-28 lg:py-32 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden will-change-transform">
       {/* Mesh gradient overlay */}
       <div
         className="absolute inset-0 opacity-40 pointer-events-none"
@@ -43,25 +43,25 @@ export function OmniInputSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-12 sm:mb-14 md:mb-16 lg:mb-20"
+          className="text-center mb-8 sm:mb-14 md:mb-16 lg:mb-20"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-3 sm:mb-4 px-2">
+          <h2 className="text-[1.75rem] leading-tight sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-3 sm:mb-4 px-2">
             If you can explain it - Zadrz will do it.
           </h2>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-4xl mx-auto px-4">
+          <p className="text-base leading-relaxed sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-4xl mx-auto px-4">
             Whether it's a voice note on the go or a PDF from Drive, Zadrz
             understands your context and executes the browser tasks instantly.
           </p>
         </motion.div>
 
-        {/* Centered Chat Interface Mockup */}
+        {/* Centered Chat Interface Mockup - viewport height on mobile for full visibility */}
         <div className="flex justify-center">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full max-w-2xl h-[500px] sm:h-[600px] lg:h-[700px]"
+            className="w-full max-w-2xl h-[75dvh] min-h-[420px] sm:h-[600px] lg:h-[700px]"
           >
             <ChatInterfaceMockup />
           </motion.div>
