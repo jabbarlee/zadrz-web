@@ -150,7 +150,7 @@ export function PlaceholdersAndVanishInput({
   return (
     <form
       className={cn(
-        "w-full relative max-w-xl mx-auto bg-white dark:bg-zinc-800 h-12 sm:h-14 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
+        "w-full relative max-w-xl mx-auto bg-white dark:bg-zinc-800 h-14 sm:h-16 md:h-14 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
         value && "bg-gray-50"
       )}
       onSubmit={handleSubmit}
@@ -172,9 +172,11 @@ export function PlaceholdersAndVanishInput({
         onKeyDown={handleKeyDown}
         ref={inputRef}
         value={value}
-        type="text"
+        type="email"
+        inputMode="email"
+        autoComplete="email"
         className={cn(
-          "w-full relative text-sm sm:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-16 sm:pr-20",
+          "w-full relative text-base sm:text-lg md:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-5 sm:pl-10 pr-16 sm:pr-20",
           animating && "text-transparent dark:text-transparent"
         )}
       />
@@ -183,7 +185,7 @@ export function PlaceholdersAndVanishInput({
         disabled={!value || submitted}
         type="submit"
         className={cn(
-          "absolute right-2 sm:right-2.5 top-1/2 z-50 -translate-y-1/2 h-8 w-8 sm:h-10 sm:w-10 rounded-full transition duration-200 flex items-center justify-center",
+          "absolute right-2 sm:right-2.5 top-1/2 z-50 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 md:h-10 md:w-10 rounded-full transition duration-200 flex items-center justify-center active:scale-95",
           submitted
             ? "bg-green-500"
             : "bg-black dark:bg-zinc-900 dark:disabled:bg-zinc-800 disabled:bg-gray-200 disabled:opacity-60"
@@ -197,15 +199,15 @@ export function PlaceholdersAndVanishInput({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="white"
               strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="sm:w-[18px] sm:h-[18px]"
+              className="sm:w-5 sm:h-5"
             >
               <polyline points="20 6 9 17 4 12" />
             </motion.svg>
@@ -215,8 +217,8 @@ export function PlaceholdersAndVanishInput({
               initial={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -224,7 +226,7 @@ export function PlaceholdersAndVanishInput({
               strokeLinecap="round"
               strokeLinejoin="round"
               className={cn(
-                "sm:w-[18px] sm:h-[18px]",
+                "sm:w-5 sm:h-5",
                 !value || submitted ? "text-gray-400" : "text-white"
               )}
             >
@@ -239,7 +241,7 @@ export function PlaceholdersAndVanishInput({
 
       <div className="absolute inset-0 flex items-center rounded-full pointer-events-none">
         {!value && (
-          <p className="dark:text-zinc-500 text-xs sm:text-sm md:text-base font-normal text-neutral-500 pl-4 sm:pl-10 text-left w-[calc(100%-3rem)] sm:w-[calc(100%-3.5rem)] truncate">
+          <p className="dark:text-zinc-500 text-sm sm:text-base md:text-base font-normal text-neutral-500 pl-5 sm:pl-10 text-left w-[calc(100%-3.5rem)] sm:w-[calc(100%-4rem)] truncate">
             {placeholder}
           </p>
         )}
