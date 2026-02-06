@@ -21,7 +21,7 @@
       "gradient": "from-blue-500/10 via-sky-500/10 to-transparent",
       "userMessage": {
         "type": "text",
-        "content": "Schedule a 30-minute meeting with Sarah Chen and Mike Ross next week to discuss the Q4 roadmap",
+        "content": "Schedule a 30-minute meeting with Sarah Chen next week to discuss the Q4 roadmap",
         "timestamp": "2:37 PM",
         "bgColor": "from-blue-600 to-sky-600"
       },
@@ -36,11 +36,6 @@
               "name": "Sarah Chen",
               "initial": "S",
               "color": "from-purple-400 to-purple-600"
-            },
-            {
-              "name": "Mike Ross",
-              "initial": "M",
-              "color": "from-green-400 to-green-600"
             }
           ]
         },
@@ -101,7 +96,7 @@
       "gradient": "from-red-500/10 via-orange-500/10 to-transparent",
       "userMessage": {
         "type": "voice",
-        "content": "Add to my todo list: Call dentist at 2pm, buy groceries, finish the project report by Friday",
+        "content": "Add to my todo list: Call dentist at 2pm, buy groceries, finish the report by Friday",
         "timestamp": "2:36 PM",
         "hasVoiceWaveform": true
       },

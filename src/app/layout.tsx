@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "Zadrz - AI Agents Without Code",
   description:
     "Use AI agents without code, configs, or complexity — through a clean messenger interface.",
+  icons: {
+    icon: "/logo_zadrz.png",
+  },
 };
 
 export default function RootLayout({

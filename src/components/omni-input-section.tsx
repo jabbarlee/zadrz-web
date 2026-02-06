@@ -61,7 +61,7 @@ export function OmniInputSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full max-w-2xl h-[75dvh] min-h-[420px] sm:h-[600px] lg:h-[700px]"
+            className="w-full max-w-2xl h-[80dvh] min-h-[420px] sm:h-[600px] lg:h-[700px]"
           >
             <ChatInterfaceMockup />
           </motion.div>
