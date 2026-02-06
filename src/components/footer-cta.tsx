@@ -5,15 +5,71 @@ import { useState } from "react";
 
 export function FooterCTA() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    // Clear message when user starts typing
+    if (message) {
+      setMessage(null);
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Email submitted:", email);
-    // Handle waitlist submission
+
+    // Reset message
+    setMessage(null);
+
+    // Basic email validation
+    if (!email || !email.includes("@")) {
+      setMessage({ type: "error", text: "Please enter a valid email address" });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setMessage({ type: "success", text: data.message });
+        setEmail(""); // Clear input on success
+      } else {
+        // Handle different error types
+        if (data.error === "already_exists") {
+          setMessage({
+            type: "error",
+            text: "You're already on the waitlist!",
+          });
+        } else {
+          setMessage({
+            type: "error",
+            text: data.message || "Something went wrong. Please try again.",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Waitlist submission error:", error);
+      setMessage({
+        type: "error",
+        text: "Network error. Please check your connection and try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -53,7 +109,10 @@ export function FooterCTA() {
           {/* Headline */}
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground px-2">
-              Upgrade your life and work with <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">ZadrBot</span>
+              Upgrade your life and work with{" "}
+              <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                ZadrBot
+              </span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Join the waitlist for early access. No credit card required. No
@@ -67,8 +126,20 @@ export function FooterCTA() {
               placeholder="Enter your email for early access"
               onChange={handleChange}
               onSubmit={handleSubmit}
+              disabled={isLoading}
             />
           </div>
+
+          {/* Status Message */}
+          {message && (
+            <p
+              className={`text-sm sm:text-base px-4 ${
+                message.type === "success" ? "text-green-500" : "text-red-500"
+              }`}
+            >
+              {message.text}
+            </p>
+          )}
 
           {/* Trust Indicators */}
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 pt-6 sm:pt-8 text-xs sm:text-sm text-muted-foreground">

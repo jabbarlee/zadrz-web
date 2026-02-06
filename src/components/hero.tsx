@@ -7,6 +7,11 @@ import { PlaceholdersAndVanishInput } from "@/src/components/ui/placeholders-and
 
 export function Hero() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   const useCases = [
     "Research",
@@ -17,14 +22,65 @@ export function Hero() {
     "Bookings",
   ];
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Email submitted:", email);
-    // Handle waitlist submission here
+
+    // Reset message
+    setMessage(null);
+
+    // Basic email validation
+    if (!email || !email.includes("@")) {
+      setMessage({ type: "error", text: "Please enter a valid email address" });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setMessage({ type: "success", text: data.message });
+        setEmail(""); // Clear input on success
+      } else {
+        // Handle different error types
+        if (data.error === "already_exists") {
+          setMessage({
+            type: "error",
+            text: "You're already on the waitlist!",
+          });
+        } else {
+          setMessage({
+            type: "error",
+            text: data.message || "Something went wrong. Please try again.",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Waitlist submission error:", error);
+      setMessage({
+        type: "error",
+        text: "Network error. Please check your connection and try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    // Clear message when user starts typing
+    if (message) {
+      setMessage(null);
+    }
   };
 
   return (
@@ -58,11 +114,23 @@ export function Hero() {
             placeholder="Enter your email for early access..."
             onChange={handleChange}
             onSubmit={handleSubmit}
+            disabled={isLoading}
           />
         </div>
 
+        {/* Status Message */}
+        {message && (
+          <p
+            className={`text-sm sm:text-base px-4 mb-2 ${
+              message.type === "success" ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {message.text}
+          </p>
+        )}
+
         <p className="text-sm sm:text-base text-muted-foreground px-4">
-          Join the waitlist for early access.
+          {isLoading ? "Submitting..." : "Join the waitlist for early access."}
         </p>
       </div>
     </AuroraBackground>
