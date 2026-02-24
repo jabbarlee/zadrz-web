@@ -1,19 +1,19 @@
 import { Hero } from "@/src/components/hero";
-import { OmniInputSection } from "@/src/components/omni-input-section";
-import { AntiTerminalSection } from "@/src/components/anti-terminal-section";
-import { UseCaseGrid } from "@/src/components/use-case-grid";
-import { TechValidationSection } from "@/src/components/tech-validation-section";
-import { FooterCTA } from "@/src/components/footer-cta";
+import { LiveStats } from "@/src/components/live-stats";
+import { WhatIDo } from "@/src/components/what-i-do";
+import { CaseStudy } from "@/src/components/case-study";
+import { AICofounderCTA } from "@/src/components/ai-cofounder-cta";
+import { SiteFooter } from "@/src/components/site-footer";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <OmniInputSection />
-      {/* <AntiTerminalSection /> */}
-      <UseCaseGrid />
-      <TechValidationSection />
-      <FooterCTA />
+      <LiveStats />
+      <WhatIDo />
+      <CaseStudy />
+      <AICofounderCTA />
+      <SiteFooter />
     </main>
   );
 }

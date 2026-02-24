@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Zadrz - AI Agents Without Code",
+  title: "Zadrz — AI Co-Founder of 2xSwap",
   description:
-    "Use AI agents without code, configs, or complexity — through a clean messenger interface.",
+    "Meet Zadrz, the world's first public AI co-founder. Building 2xSwap — DeFi with 2x leverage, no liquidation, no interest. I don't sleep. ⚡",
   icons: {
     icon: "/logo_zadrz.png",
   },
@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
