@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2xSwap — LP Opportunity</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #070d1a; color: #e8f0fe; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 24px; }
+
+  .badge { display: inline-block; background: #0d2a5e; color: #8AB6F9; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 28px; }
+  h1 { font-size: 42px; font-weight: 700; line-height: 1.2; color: #fff; margin-bottom: 16px; }
+  h1 span { color: #8AB6F9; }
+  .sub { font-size: 18px; color: #8AB6F9; margin-bottom: 48px; line-height: 1.6; }
+
+  .divider { height: 1px; background: #0d2a5e; margin: 40px 0; }
+
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  .card { background: #0b1a3a; border: 1px solid #0d2a5e; border-radius: 12px; padding: 24px; }
+  .card .num { font-size: 32px; font-weight: 700; color: #8AB6F9; }
+  .card .label { font-size: 14px; color: #6b82a8; margin-top: 4px; }
+  .card .desc { font-size: 14px; color: #cadcfc; margin-top: 10px; line-height: 1.5; }
+
+  .how { margin-bottom: 40px; }
+  .how h2 { font-size: 22px; font-weight: 600; margin-bottom: 20px; color: #fff; }
+  .step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+  .step .n { width: 28px; height: 28px; border-radius: 50%; background: #0d2a5e; color: #8AB6F9; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .step .txt { font-size: 15px; color: #cadcfc; line-height: 1.6; }
+  .step .txt strong { color: #fff; }
+
+  .why { background: #0b1a3a; border: 1px solid #0d2a5e; border-radius: 12px; padding: 28px; margin-bottom: 40px; }
+  .why h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #fff; }
+  .why ul { list-style: none; }
+  .why ul li { padding: 8px 0; font-size: 15px; color: #cadcfc; border-bottom: 1px solid #0d2a5e; }
+  .why ul li:last-child { border-bottom: none; }
+  .why ul li::before { content: "→ "; color: #8AB6F9; font-weight: 700; }
+
+  .cta { text-align: center; padding: 40px 0; }
+  .cta p { font-size: 16px; color: #6b82a8; margin-bottom: 20px; }
+  .cta a { display: inline-block; background: #8AB6F9; color: #070d1a; font-weight: 700; font-size: 16px; padding: 14px 36px; border-radius: 8px; text-decoration: none; }
+  .cta .sec { display: block; margin-top: 14px; font-size: 13px; color: #6b82a8; }
+
+  .footer { border-top: 1px solid #0d2a5e; padding-top: 24px; font-size: 13px; color: #3d5275; text-align: center; }
+
+  @media (max-width: 520px) {
+    .cards { grid-template-columns: 1fr; }
+    h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="badge">🔴 Mainnet Live — Feb 2026</div>
+
+  <h1>Earn yield from <span>leveraged traders.</span><br>Without taking their risk.</h1>
+  <p class="sub">2xSwap is a 2x leverage protocol with no liquidation mechanism. LPs provide liquidity — traders pay fees. You earn. No liquidation cascades to worry about.</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="num">80/20</div>
+      <div class="label">Fee split at launch</div>
+      <div class="desc">80% of trading fees go to LPs. Shifts toward 50/50 as utilization grows.</div>
+    </div>
+    <div class="card">
+      <div class="num">95%</div>
+      <div class="label">Max pool utilization</div>
+      <div class="desc">High capital efficiency. Your idle capital is always working.</div>
+    </div>
+    <div class="card">
+      <div class="num">ERC-4626</div>
+      <div class="label">Standard vault</div>
+      <div class="desc">Your LP tokens (2xLP) follow the ERC-4626 standard. Auditable, composable, transparent.</div>
+    </div>
+    <div class="card">
+      <div class="num">2×</div>
+      <div class="label">Points multiplier</div>
+      <div class="desc">Early LPs earn loyalty multipliers (1x → 2x over 30 days). Points matter post-launch.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="how">
+    <h2>How it works for LPs</h2>
+    <div class="step"><div class="n">1</div><div class="txt"><strong>Deposit USDC</strong> into the X2Pool vault. Receive 2xLP tokens representing your share.</div></div>
+    <div class="step"><div class="n">2</div><div class="txt"><strong>Traders open leveraged positions</strong> by borrowing from your pool. They pay a fee on open + on close.</div></div>
+    <div class="step"><div class="n">3</div><div class="txt"><strong>Fees accumulate.</strong> When traders close positions (profit or loss), proceeds return to the pool + fees.</div></div>
+    <div class="step"><div class="n">4</div><div class="txt"><strong>Withdraw anytime</strong> — partial withdrawals supported. If utilization is high, withdraw up to available liquidity.</div></div>
+  </div>
+
+  <div class="why">
+    <h2>Why no-liquidation is good for LPs</h2>
+    <ul>
+      <li>Traders hold positions longer → more fee revenue for the pool</li>
+      <li>No liquidation cascades → pool doesn't take sudden losses from bad debt</li>
+      <li>Positions expire max 1 year → clean, predictable risk horizon</li>
+      <li>Oracle-validated pricing (Chainlink) → no manipulation risk</li>
+    </ul>
+  </div>
+
+  <div class="cta">
+    <p>Interested in being an anchor LP at launch?</p>
+    <a href="mailto:didar@2xswap.com">Talk to Didar → didar@2xswap.com</a>
+    <span class="sec">or visit 2xswap.com · contracts verified on Etherscan</span>
+  </div>
+
+  <div class="footer">
+    2xSwap · Ethereum Mainnet · Contract: 0x644bd18FE211A75756E35Ec5766163C7866fa0d0<br>
+    This is not financial advice. Liquidity provision involves risk.
+  </div>
+
+</div>
+</body>
+</html>
