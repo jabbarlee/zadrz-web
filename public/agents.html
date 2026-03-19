@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2xSwap — The Leverage Layer for AI Trading Agents</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e1a;
+    --primary: #0066FF;
+    --primary-glow: rgba(0, 102, 255, 0.25);
+    --green: #00CC66;
+    --green-glow: rgba(0, 204, 102, 0.2);
+    --red: #FF4444;
+    --red-glow: rgba(255, 68, 68, 0.2);
+    --warn: #FFaa00;
+    --warn-glow: rgba(255, 170, 0, 0.2);
+    --white: #ffffff;
+    --secondary: #8899aa;
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+    --radius: 12px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #00AAFF);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index: 100;
+    box-shadow: 0 0 12px var(--primary);
+  }
+
+  /* ===== SLIDE COUNTER ===== */
+  #slide-counter {
+    position: fixed;
+    bottom: 28px; right: 32px;
+    font-size: 13px;
+    color: var(--secondary);
+    letter-spacing: 0.05em;
+    z-index: 100;
+    font-variant-numeric: tabular-nums;
+  }
+  #slide-counter span { color: var(--white); font-weight: 600; }
+
+  /* ===== NAV ARROWS ===== */
+  .nav-arrow {
+    position: fixed;
+    top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: background 0.2s, opacity 0.2s;
+    color: var(--secondary);
+    font-size: 18px;
+    user-select: none;
+  }
+  .nav-arrow:hover { background: rgba(0,102,255,0.2); color: var(--white); }
+  .nav-arrow.hidden { opacity: 0; pointer-events: none; }
+  #nav-prev { left: 20px; }
+  #nav-next { right: 20px; }
+
+  /* ===== SLIDES CONTAINER ===== */
+  #slides {
+    width: 100%; height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    transform: translateX(60px);
+    background: radial-gradient(ellipse at 60% 20%, rgba(0,102,255,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(0,204,102,0.04) 0%, transparent 50%),
+                var(--bg);
+    overflow-y: auto;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+  }
+
+  .slide.exit-left { opacity: 0; transform: translateX(-60px); }
+  .slide.exit-right { opacity: 0; transform: translateX(60px); }
+
+  /* ===== SLIDE ENTRY ANIMATIONS ===== */
+  .slide.active .animate-in {
+    animation: slideUp 0.6s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide.active .animate-in:nth-child(1) { animation-delay: 0.05s; }
+  .slide.active .animate-in:nth-child(2) { animation-delay: 0.15s; }
+  .slide.active .animate-in:nth-child(3) { animation-delay: 0.25s; }
+  .slide.active .animate-in:nth-child(4) { animation-delay: 0.35s; }
+  .slide.active .animate-in:nth-child(5) { animation-delay: 0.45s; }
+  .slide.active .animate-in:nth-child(6) { animation-delay: 0.55s; }
+  .slide.active .animate-in:nth-child(7) { animation-delay: 0.65s; }
+
+  /* ===== TYPOGRAPHY ===== */
+  .slide-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+
+  .big-title {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #88aaff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--secondary);
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 640px;
+  }
+
+  .section-title {
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .key-message {
+    font-size: clamp(14px, 1.8vw, 18px);
+    color: var(--secondary);
+    text-align: center;
+    max-width: 700px;
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+
+  .key-message strong { color: var(--white); }
+
+  /* ===== BADGES ===== */
+  .badges {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .badge {
+    background: rgba(0,204,102,0.12);
+    border: 1px solid rgba(0,204,102,0.3);
+    color: var(--green);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .badge.warn {
+    background: rgba(255,170,0,0.12);
+    border-color: rgba(255,170,0,0.3);
+    color: var(--warn);
+  }
+
+  .badge.blue {
+    background: rgba(0,102,255,0.12);
+    border-color: rgba(0,102,255,0.3);
+    color: #66aaff;
+  }
+
+  /* ===== STAT CARDS ===== */
+  .stat-cards {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 28px 36px;
+    text-align: center;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .stat-card.red { border-color: rgba(255,68,68,0.35); background: rgba(255,68,68,0.07); }
+  .stat-card.green { border-color: rgba(0,204,102,0.35); background: rgba(0,204,102,0.07); }
+  .stat-card.blue { border-color: rgba(0,102,255,0.35); background: rgba(0,102,255,0.07); }
+
+  .stat-card .stat-num {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-card.red .stat-num { color: var(--red); }
+  .stat-card.green .stat-num { color: var(--green); }
+  .stat-card.blue .stat-num { color: #66aaff; }
+
+  .stat-card .stat-label {
+    font-size: 13px;
+    color: var(--secondary);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* ===== PROBLEM LIST ===== */
+  .problem-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 720px;
+  }
+
+  .problem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+
+  .problem-item .p-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .problem-item .p-text {
+    font-size: 15px;
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  .problem-item .p-text strong { color: var(--red); }
+  .problem-item .p-text em { color: var(--warn); font-style: normal; font-weight: 600; }
+
+  /* ===== COMPARISON TABLE ===== */
+  .compare-table {
+    width: 100%;
+    max-width: 860px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .compare-table th {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .compare-table th:first-child {
+    background: rgba(255,255,255,0.04);
+    color: var(--secondary);
+    width: 22%;
+  }
+
+  .compare-table th.perps-head {
+    background: rgba(255,68,68,0.08);
+    color: var(--red);
+  }
+
+  .compare-table th.swap-head {
+    background: rgba(0,204,102,0.08);
+    color: var(--green);
+  }
+
+  .compare-table td {
+    padding: 13px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .compare-table td:first-child {
+    font-weight: 700;
+    color: var(--white);
+    background: rgba(255,255,255,0.02);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .compare-table .perps-cell {
+    color: var(--red);
+    background: rgba(255,68,68,0.04);
+  }
+
+  .compare-table .swap-cell {
+    color: var(--green);
+    background: rgba(0,204,102,0.04);
+  }
+
+  /* ===== ARCHITECTURE DIAGRAM ===== */
+  .arch-diagram {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 0;
+    align-items: center;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .arch-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .arch-col-title {
+    font-size: 11px;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  .bot-card {
+    background: rgba(0,102,255,0.08);
+    border: 1px solid rgba(0,102,255,0.3);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    text-align: center;
+    width: 100%;
+    max-width: 180px;
+  }
+
+  .bot-card .bot-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #66aaff;
+    margin-bottom: 3px;
+  }
+
+  .bot-card .bot-strat {
+    font-size: 11px;
+    color: var(--secondary);
+  }
+
+  .protocol-box {
+    background: linear-gradient(135deg, rgba(0,102,255,0.15), rgba(0,102,255,0.05));
+    border: 1px solid rgba(0,102,255,0.4);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 200px;
+    box-shadow: 0 0 40px rgba(0,102,255,0.2);
+  }
+
+  .protocol-box .proto-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .protocol-box .proto-sub {
+    font-size: 11px;
+    color: var(--secondary);
+    margin-bottom: 12px;
+  }
+
+  .asset-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .asset-tag {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .lp-pool-box {
+    background: rgba(0,204,102,0.08);
+    border: 1px solid rgba(0,204,102,0.35);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 180px;
+  }
+
+  .lp-pool-box .lp-icon { font-size: 32px; margin-bottom: 6px; }
+  .lp-pool-box .lp-title { font-size: 18px; font-weight: 800; color: var(--green); margin-bottom: 4px; }
+  .lp-pool-box .lp-sub { font-size: 12px; color: var(--secondary); }
+
+  .arch-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    flex-shrink: 0;
+  }
+
+  .arch-arrow .arr-line {
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(180deg, rgba(0,102,255,0.5), rgba(0,204,102,0.5));
+    position: relative;
+  }
+
+  .arch-arrow .arr-label {
+    font-size: 10px;
+    color: var(--secondary);
+    text-align: center;
+    max-width: 90px;
+    line-height: 1.3;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 4px 8px;
+  }
+
+  .arch-arrow-h {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+
+  .arch-arrow-h .ah-symbol {
+    font-size: 24px;
+    color: var(--secondary);
+  }
+
+  .arch-arrow-h .ah-label {
+    font-size: 10px;
+    color: var(--secondary);
+    text-align: center;
+    max-width: 90px;
+    line-height: 1.3;
+  }
+
+  /* ===== PROFIT SPLIT ===== */
+  .profit-split {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 8px;
+  }
+
+  .split-card {
+    flex: 1;
+    min-width: 140px;
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .split-card.trader {
+    background: rgba(0,102,255,0.1);
+    border: 1px solid rgba(0,102,255,0.35);
+  }
+
+  .split-card.lp {
+    background: rgba(0,204,102,0.1);
+    border: 1px solid rgba(0,204,102,0.35);
+  }
+
+  .split-card .split-pct {
+    font-size: 32px;
+    font-weight: 800;
+    display: block;
+  }
+
+  .split-card.trader .split-pct { color: #66aaff; }
+  .split-card.lp .split-pct { color: var(--green); }
+
+  .split-card .split-label {
+    font-size: 12px;
+    color: var(--secondary);
+    margin-top: 4px;
+  }
+
+  /* ===== LEVERAGE CARDS ===== */
+  .leverage-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 720px;
+  }
+
+  .lev-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .lev-card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+
+  .lev-card .lev-asset {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .lev-card .lev-info { flex: 1; }
+
+  .lev-card .lev-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .lev-card .lev-vol {
+    font-size: 12px;
+    color: var(--secondary);
+    margin-bottom: 8px;
+  }
+
+  .lev-bar-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .lev-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .lev-card .lev-num {
+    font-size: 22px;
+    font-weight: 800;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ===== STOP-LOSS COMPARISON ===== */
+  .sl-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .sl-col {
+    border-radius: 20px;
+    padding: 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sl-col.bad {
+    background: rgba(255,68,68,0.07);
+    border: 1px solid rgba(255,68,68,0.3);
+  }
+
+  .sl-col.good {
+    background: rgba(0,204,102,0.07);
+    border: 1px solid rgba(0,204,102,0.3);
+  }
+
+  .sl-col .sl-head {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .sl-col.bad .sl-head { color: var(--red); }
+  .sl-col.good .sl-head { color: var(--green); }
+
+  .sl-col .sl-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .sl-col .sl-body {
+    font-size: 14px;
+    color: var(--secondary);
+    line-height: 1.6;
+  }
+
+  .sl-col .sl-body strong { color: var(--white); }
+
+  .sl-highlight {
+    margin-top: 4px;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .sl-col.bad .sl-highlight {
+    background: rgba(255,68,68,0.12);
+    color: var(--red);
+  }
+
+  .sl-col.good .sl-highlight {
+    background: rgba(0,204,102,0.12);
+    color: var(--green);
+  }
+
+  /* ===== LP TABLE ===== */
+  .lp-table {
+    width: 100%;
+    max-width: 780px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .lp-table th {
+    background: rgba(255,255,255,0.06);
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    color: var(--secondary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .lp-table td {
+    padding: 14px 20px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+
+  .lp-table tr:last-child td { border-bottom: none; }
+
+  .lp-table .lev-cell {
+    font-weight: 800;
+    font-size: 18px;
+  }
+
+  .lp-table tr:nth-child(1) .lev-cell { color: #66aaff; }
+  .lp-table tr:nth-child(2) .lev-cell { color: var(--warn); }
+  .lp-table tr:nth-child(3) .lev-cell { color: var(--green); }
+
+  .lp-table tr:nth-child(1) td { background: rgba(0,102,255,0.04); }
+  .lp-table tr:nth-child(2) td { background: rgba(255,170,0,0.04); }
+  .lp-table tr:nth-child(3) td { background: rgba(0,204,102,0.04); }
+
+  .lp-table .profit-cell { color: var(--green); font-weight: 700; }
+  .lp-table .return-cell { color: var(--warn); font-weight: 700; }
+
+  /* ===== ROADMAP TIMELINE ===== */
+  .roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 700px;
+    position: relative;
+  }
+
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--primary), rgba(0,102,255,0.1));
+  }
+
+  .roadmap-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px 0;
+    position: relative;
+  }
+
+  .roadmap-dot {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .roadmap-dot.now {
+    background: var(--green);
+    box-shadow: 0 0 20px rgba(0,204,102,0.5);
+    color: #000;
+  }
+
+  .roadmap-dot.soon {
+    background: var(--primary);
+    box-shadow: 0 0 20px rgba(0,102,255,0.4);
+    color: var(--white);
+  }
+
+  .roadmap-dot.future {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--secondary);
+  }
+
+  .roadmap-content {
+    padding-top: 10px;
+  }
+
+  .roadmap-content .r-phase {
+    font-size: 11px;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .roadmap-content .r-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .roadmap-content .r-items {
+    font-size: 13px;
+    color: var(--secondary);
+    line-height: 1.6;
+  }
+
+  .roadmap-content .r-items .highlight { color: var(--green); font-weight: 600; }
+  .roadmap-content .r-items .highlight-warn { color: var(--warn); font-weight: 600; }
+
+  /* ===== WIN CARDS ===== */
+  .win-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .win-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    flex: 1;
+    min-width: 220px;
+    max-width: 270px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .win-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .win-card.w-blue::before { background: linear-gradient(90deg, var(--primary), transparent); }
+  .win-card.w-green::before { background: linear-gradient(90deg, var(--green), transparent); }
+  .win-card.w-warn::before { background: linear-gradient(90deg, var(--warn), transparent); }
+
+  .win-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .win-card .win-icon { font-size: 42px; margin-bottom: 16px; display: block; }
+  .win-card .win-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--white); }
+  .win-card .win-desc { font-size: 13px; color: var(--secondary); line-height: 1.6; }
+
+  /* ===== CTA CONTACT ===== */
+  .cta-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 52px 64px;
+    text-align: center;
+    max-width: 640px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,102,255,0.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-card .cta-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, #88aaff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .cta-card .cta-sub {
+    font-size: 16px;
+    color: var(--secondary);
+    margin-bottom: 32px;
+  }
+
+  .cta-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .cta-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: var(--white);
+    text-decoration: none;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 12px 28px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .cta-link:hover {
+    background: rgba(0,102,255,0.15);
+    border-color: rgba(0,102,255,0.4);
+  }
+
+  .cta-link .cta-link-icon { font-size: 18px; }
+
+  /* ===== FLASH BANNER ===== */
+  .flash-banner {
+    background: rgba(255,68,68,0.08);
+    border: 1px solid rgba(255,68,68,0.3);
+    border-radius: var(--radius);
+    padding: 12px 20px;
+    font-size: 13px;
+    color: var(--red);
+    font-weight: 600;
+    text-align: center;
+    max-width: 720px;
+    width: 100%;
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 768px) {
+    .slide { padding: 52px 20px 70px; }
+
+    .arch-diagram {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .arch-arrow-h { display: none; }
+
+    .arch-arrow-h-mob {
+      display: flex;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--secondary);
+    }
+
+    .sl-compare { grid-template-columns: 1fr; }
+    .leverage-cards { grid-template-columns: 1fr; }
+    .win-cards { flex-direction: column; align-items: center; }
+    .cta-card { padding: 36px 28px; }
+    .compare-table { font-size: 12px; }
+    .compare-table td, .compare-table th { padding: 10px 12px; }
+    .stat-cards { flex-direction: column; align-items: center; }
+  }
+
+  @media (max-width: 480px) {
+    .big-title { font-size: 42px; }
+    .section-title { font-size: 22px; }
+    #nav-prev { left: 8px; }
+    #nav-next { right: 8px; }
+    .nav-arrow { width: 36px; height: 36px; font-size: 14px; }
+  }
+
+  /* ===== GLITCH ANIM FOR BIG NUMBERS ===== */
+  @keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 20px currentColor; }
+    50% { text-shadow: 0 0 40px currentColor, 0 0 80px currentColor; }
+  }
+
+  .pulse { animation: pulse-glow 2s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- Slide Counter -->
+<div id="slide-counter"><span id="current-num">1</span> / <span id="total-num">10</span></div>
+
+<!-- Nav Arrows -->
+<div class="nav-arrow hidden" id="nav-prev" onclick="navigate(-1)">&#8592;</div>
+<div class="nav-arrow" id="nav-next" onclick="navigate(1)">&#8594;</div>
+
+<!-- SLIDES -->
+<div id="slides">
+
+  <!-- ===== SLIDE 1: TITLE ===== -->
+  <div class="slide active" data-slide="1">
+    <div class="slide-label animate-in">AI Agent Trading Platform</div>
+    <div class="big-title animate-in">2xSwap</div>
+    <div class="subtitle animate-in" style="margin-top:16px">The Leverage Layer for AI Trading Agents</div>
+    <div class="badges animate-in" style="margin-top:28px">
+      <span class="badge">✅ Live on Ethereum</span>
+      <span class="badge">✅ Audited</span>
+      <span class="badge warn">🔜 Bot SDK Coming</span>
+    </div>
+    <div style="margin-top:48px; display:flex; align-items:center; gap:12px;" class="animate-in">
+      <div style="width:40px; height:1px; background:rgba(255,255,255,0.15)"></div>
+      <span style="font-size:13px; color:var(--secondary)">Built for autonomous trading agents</span>
+      <div style="width:40px; height:1px; background:rgba(255,255,255,0.15)"></div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2: THE PROBLEM ===== -->
+  <div class="slide" data-slide="2">
+    <div class="slide-label animate-in">The Problem</div>
+    <div class="section-title animate-in">Bots Are <span style="color:var(--red)">Getting Wrecked</span></div>
+    <div class="key-message animate-in" style="margin-bottom:24px">
+      <strong>15,000 AI trading bots</strong> active in crypto today — and they keep getting liquidated.
+    </div>
+
+    <div class="stat-cards animate-in" style="margin-bottom:24px">
+      <div class="stat-card red">
+        <span class="stat-num pulse">$150B</span>
+        <div class="stat-label">Liquidated in 2025</div>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-num pulse" style="color:var(--warn)">83%</span>
+        <div class="stat-label">Were right about direction<br>Lost anyway</div>
+      </div>
+    </div>
+
+    <div class="problem-list animate-in">
+      <div class="problem-item">
+        <span class="p-icon">⚡</span>
+        <div class="p-text"><strong>Feb 2026 flash crash:</strong> AI agents crashed the market in 3 seconds. Mass liquidations cascaded.</div>
+      </div>
+      <div class="problem-item">
+        <span class="p-icon">🤖</span>
+        <div class="p-text">Bots get <strong>liquidated at 3am</strong> — no human to answer a margin call. The exchange doesn't care.</div>
+      </div>
+      <div class="problem-item">
+        <span class="p-icon">💸</span>
+        <div class="p-text"><em>Funding rates</em> kill bot profitability — bots hold positions for days/weeks, not minutes. Costs compound.</div>
+      </div>
+      <div class="problem-item">
+        <span class="p-icon">🚫</span>
+        <div class="p-text">No DeFi protocol is <em>designed FOR agents</em>. They're second-class users on platforms built for humans.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3: COMPARISON TABLE ===== -->
+  <div class="slide" data-slide="3">
+    <div class="slide-label animate-in">Infrastructure Gap</div>
+    <div class="section-title animate-in">Why Bots Need<br><span style="color:var(--primary)">Different Infrastructure</span></div>
+
+    <table class="compare-table animate-in">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="perps-head">❌ Perps (GMX, Hyperliquid)</th>
+          <th class="swap-head">✅ 2xSwap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Liquidation</td>
+          <td class="perps-cell">Yes — bot gets rekt on wicks</td>
+          <td class="swap-cell">No — position survives volatility</td>
+        </tr>
+        <tr>
+          <td>Funding Rates</td>
+          <td class="perps-cell">24/7 cost — kills long holds</td>
+          <td class="swap-cell">Zero — holding is free</td>
+        </tr>
+        <tr>
+          <td>Asset</td>
+          <td class="perps-cell">Synthetic price bet</td>
+          <td class="swap-cell">Real asset purchase on Uniswap</td>
+        </tr>
+        <tr>
+          <td>Hold Duration</td>
+          <td class="perps-cell">Minutes (funding eats profit)</td>
+          <td class="swap-cell">Up to 1 year, zero cost</td>
+        </tr>
+        <tr>
+          <td>Bot-Friendly</td>
+          <td class="perps-cell">No API designed for agents</td>
+          <td class="swap-cell">SDK + programmatic access</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="key-message animate-in" style="margin-top:20px">
+      The entire perp ecosystem was designed for <strong>human traders</strong> clicking buttons. Bots need fundamentally different infrastructure.
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 4: HOW IT WORKS ===== -->
+  <div class="slide" data-slide="4">
+    <div class="slide-label animate-in">Architecture</div>
+    <div class="section-title animate-in">How 2xSwap Works <span style="color:var(--primary)">For Bots</span></div>
+
+    <div class="arch-diagram animate-in">
+      <!-- Left: Bots -->
+      <div class="arch-col">
+        <div class="arch-col-title">AI Bots</div>
+        <div class="bot-card">
+          <div class="bot-name">Bot 1</div>
+          <div class="bot-strat">Mean Reversion BTC</div>
+        </div>
+        <div class="bot-card">
+          <div class="bot-name">Bot 2</div>
+          <div class="bot-strat">Momentum ETH</div>
+        </div>
+        <div class="bot-card">
+          <div class="bot-name">Bot 3</div>
+          <div class="bot-strat">VWAP NVDA</div>
+        </div>
+      </div>
+
+      <!-- Arrow Left -->
+      <div class="arch-arrow-h">
+        <div class="ah-symbol">→</div>
+        <div class="ah-label">Send $10K + get $10K from pool</div>
+      </div>
+
+      <!-- Center: Protocol -->
+      <div class="arch-col">
+        <div class="arch-col-title">2xSwap Protocol</div>
+        <div class="protocol-box">
+          <div class="proto-title">⚡ Smart Contract</div>
+          <div class="proto-sub">Co-investment engine</div>
+          <div class="asset-tags">
+            <span class="asset-tag">BTC</span>
+            <span class="asset-tag">ETH</span>
+            <span class="asset-tag">NVDA</span>
+            <span class="asset-tag">AAPL</span>
+            <span class="asset-tag">TSLA</span>
+            <span class="asset-tag">AMZN</span>
+          </div>
+        </div>
+        <div style="text-align:center; font-size:12px; color:var(--secondary); margin-top:8px">Buys real assets on Uniswap</div>
+      </div>
+
+      <!-- Arrow Right -->
+      <div class="arch-arrow-h">
+        <div class="ah-symbol">←</div>
+        <div class="ah-label">LPs provide capital</div>
+      </div>
+
+      <!-- Right: LP Pool -->
+      <div class="arch-col">
+        <div class="arch-col-title">LP Pool</div>
+        <div class="lp-pool-box">
+          <div class="lp-icon">🏦</div>
+          <div class="lp-title">$100K</div>
+          <div class="lp-sub">Liquidity Providers<br>earn passive yield</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile arrows -->
+    <div style="display:none" class="arch-arrow-h-mob">↓</div>
+
+    <div class="profit-split animate-in">
+      <div class="split-card trader">
+        <span class="split-pct">80%</span>
+        <div class="split-label">Bot's profit share</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:20px;color:var(--secondary)">÷</div>
+      <div class="split-card lp">
+        <span class="split-pct">20%</span>
+        <div class="split-label">LP's yield</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 5: DYNAMIC LEVERAGE ===== -->
+  <div class="slide" data-slide="5">
+    <div class="slide-label animate-in">Dynamic Leverage</div>
+    <div class="section-title animate-in">Leverage by Asset</div>
+    <div class="key-message animate-in" style="margin-bottom:24px">
+      <strong>leverage = 1 / max_drawdown_commitment</strong><br>
+      Lower volatility = higher leverage. The protocol calculates it automatically.
+    </div>
+
+    <div class="leverage-cards animate-in">
+      <div class="lev-card">
+        <div class="lev-asset">🍎</div>
+        <div class="lev-info">
+          <div class="lev-name">Apple Stock</div>
+          <div class="lev-vol">Low volatility — stable</div>
+          <div class="lev-bar-track">
+            <div class="lev-bar-fill" style="width:80%; background:linear-gradient(90deg, var(--green), #00ff88)"></div>
+          </div>
+        </div>
+        <div class="lev-num" style="color:var(--green)">5–7x</div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-asset">₿</div>
+        <div class="lev-info">
+          <div class="lev-name">Bitcoin (BTC)</div>
+          <div class="lev-vol">Medium volatility</div>
+          <div class="lev-bar-track">
+            <div class="lev-bar-fill" style="width:45%; background:linear-gradient(90deg, var(--primary), #44aaff)"></div>
+          </div>
+        </div>
+        <div class="lev-num" style="color:#66aaff">2–3x</div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-asset">Ξ</div>
+        <div class="lev-info">
+          <div class="lev-name">Ethereum (ETH)</div>
+          <div class="lev-vol">Medium-high volatility</div>
+          <div class="lev-bar-track">
+            <div class="lev-bar-fill" style="width:35%; background:linear-gradient(90deg, #7755ff, #aa88ff)"></div>
+          </div>
+        </div>
+        <div class="lev-num" style="color:#aa88ff">2x</div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-asset">🐶</div>
+        <div class="lev-info">
+          <div class="lev-name">Dogecoin (DOGE)</div>
+          <div class="lev-vol">High volatility — meme</div>
+          <div class="lev-bar-track">
+            <div class="lev-bar-fill" style="width:18%; background:linear-gradient(90deg, var(--warn), #ffcc44)"></div>
+          </div>
+        </div>
+        <div class="lev-num" style="color:var(--warn)">1.5x</div>
+      </div>
+    </div>
+
+    <div class="flash-banner animate-in" style="margin-top:20px; background:rgba(0,102,255,0.08); border-color:rgba(0,102,255,0.3); color:#66aaff">
+      📊 Your bot doesn't guess the leverage — it's computed on-chain from historical drawdown data
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 6: STOP-LOSS AS DEAL TERM ===== -->
+  <div class="slide" data-slide="6">
+    <div class="slide-label animate-in">Mechanism Design</div>
+    <div class="section-title animate-in">Stop-Loss as a <span style="color:var(--green)">Deal Term</span></div>
+    <div class="key-message animate-in" style="margin-bottom:24px">Not liquidation. Not punishment. A <strong>commitment between co-investors.</strong></div>
+
+    <div class="sl-compare animate-in">
+      <div class="sl-col bad">
+        <div class="sl-head">❌ Traditional Perps</div>
+        <div class="sl-title">Exchange liquidates you at -10%</div>
+        <div class="sl-body">
+          You have <strong>no say</strong> in when or how. The exchange protects itself.
+          You lose everything — the position, the margin, the opportunity.
+          <br><br>
+          At 3am, with no human watching, your bot gets <strong>rekt on a wick</strong> that recovers 2 minutes later.
+        </div>
+        <div class="sl-highlight">You lose. Exchange wins. No appeal.</div>
+      </div>
+
+      <div class="sl-col good">
+        <div class="sl-head">✅ 2xSwap</div>
+        <div class="sl-title">Bot CHOOSES its stop-loss</div>
+        <div class="sl-body">
+          Your bot sets its stop (e.g. -5%) <strong>before entering the trade</strong>.
+          It's a mutual agreement with the LP.
+          <br><br>
+          Tighter stop → LP takes less risk → <strong>higher leverage offered</strong>. 
+          The bot is incentivized to have disciplined risk management built-in.
+        </div>
+        <div class="sl-highlight">Tighter stop → Higher leverage. Your choice. ✓</div>
+      </div>
+    </div>
+
+    <div class="key-message animate-in" style="margin-top:20px; font-size:20px">
+      <strong style="color:var(--green)">"This is a deal term, not a punishment."</strong>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 7: LP ECONOMICS ===== -->
+  <div class="slide" data-slide="7">
+    <div class="slide-label animate-in">LP Economics</div>
+    <div class="section-title animate-in">Returns at <span style="color:var(--warn)">Different Leverage</span></div>
+    <div class="key-message animate-in" style="margin-bottom:24px">
+      Example: <strong>$10K trader deposit</strong> + asset moves <strong>+10%</strong>
+    </div>
+
+    <table class="lp-table animate-in">
+      <thead>
+        <tr>
+          <th>Leverage</th>
+          <th>LP Capital Deployed</th>
+          <th>LP Profit</th>
+          <th>LP Return</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="lev-cell">2x</span></td>
+          <td>$10,000</td>
+          <td class="profit-cell">$400</td>
+          <td class="return-cell">4.0%</td>
+        </tr>
+        <tr>
+          <td><span class="lev-cell">5x</span></td>
+          <td>$40,000</td>
+          <td class="profit-cell">$1,000</td>
+          <td class="return-cell">2.5%</td>
+        </tr>
+        <tr>
+          <td><span class="lev-cell">10x</span></td>
+          <td>$90,000</td>
+          <td class="profit-cell">$2,000</td>
+          <td class="return-cell">2.2%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="key-message animate-in" style="margin-top:20px">
+      Higher leverage = more LP capital deployed = <strong>more absolute profit</strong> but lower % return per trade.
+      More bots = more trades = <strong>compounding yield</strong>.
+    </div>
+
+    <div class="flash-banner animate-in" style="margin-top:16px; background:rgba(0,204,102,0.08); border-color:rgba(0,204,102,0.3); color:var(--green)">
+      🤖 1,000 bots running daily strategies = your LP capital works 24/7 — no gas, no effort
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 8: ROADMAP ===== -->
+  <div class="slide" data-slide="8">
+    <div class="slide-label animate-in">Roadmap</div>
+    <div class="section-title animate-in">From <span style="color:var(--green)">Live</span> to <span style="color:var(--primary)">Dominant</span></div>
+
+    <div class="roadmap animate-in">
+      <div class="roadmap-item">
+        <div class="roadmap-dot now">NOW</div>
+        <div class="roadmap-content">
+          <div class="r-phase">Phase 1 — Live Today</div>
+          <div class="r-title">2x Leverage · BTC + ETH · Ethereum Mainnet</div>
+          <div class="r-items"><span class="highlight">✅ Smart contracts deployed</span> · <span class="highlight">✅ Audited</span> · <span class="highlight">✅ First trades executing</span></div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot soon">Q3</div>
+        <div class="roadmap-content">
+          <div class="r-phase">Phase 2 — Q3 2026</div>
+          <div class="r-title">Multi-chain · Tokenized Stocks · Lower Fees</div>
+          <div class="r-items">
+            <span class="highlight-warn">1inch aggregator</span> (lower fees) · 
+            <span class="highlight-warn">Arbitrum + Base</span> · 
+            <span class="highlight-warn">Tokenized stocks</span>: Apple, Tesla, Google
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot soon">Q4</div>
+        <div class="roadmap-content">
+          <div class="r-phase">Phase 3 — Q4 2026 🔑</div>
+          <div class="r-title">Bot Platform SDK — The Big One</div>
+          <div class="r-items">
+            <span class="highlight">Connect your agent in one line of code</span> · 
+            Dynamic leverage <span class="highlight">2x–50x</span> · 
+            Strategy marketplace · 
+            Dedicated agent API
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot future">2027</div>
+        <div class="roadmap-content">
+          <div class="r-phase">Phase 4 — 2027</div>
+          <div class="r-title">Strategy Marketplace · Cross-chain · Institutional API</div>
+          <div class="r-items">Public strategy registry · Cross-chain routing · Institutional-grade API access</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 9: WHY THIS WINS ===== -->
+  <div class="slide" data-slide="9">
+    <div class="slide-label animate-in">Competitive Advantage</div>
+    <div class="section-title animate-in">Why <span style="color:var(--primary)">This Wins</span></div>
+    <div class="key-message animate-in" style="margin-bottom:28px">
+      Three things no competitor can replicate overnight.
+    </div>
+
+    <div class="win-cards animate-in">
+      <div class="win-card w-blue">
+        <span class="win-icon">🔐</span>
+        <div class="win-title">Real Protocol,<br>Real Contracts</div>
+        <div class="win-desc">Live on Ethereum mainnet — not a testnet toy. Audited. Real trades. Real capital moving. The hardest part is already done.</div>
+      </div>
+
+      <div class="win-card w-green">
+        <span class="win-icon">🤖</span>
+        <div class="win-title">Built for<br>Agents</div>
+        <div class="win-desc">No DeFi protocol is designed for autonomous trading bots. We're the first. SDK coming Q4 2026 — first-mover on an emerging $B category.</div>
+      </div>
+
+      <div class="win-card w-warn">
+        <span class="win-icon">🤝</span>
+        <div class="win-title">Co-investment,<br>Not Debt</div>
+        <div class="win-desc">LP and trader are aligned partners. Based on the mudarabah model — profit-sharing with centuries of track record. No interest. No liquidation cascade.</div>
+      </div>
+    </div>
+
+    <div class="flash-banner animate-in" style="margin-top:24px; background:rgba(0,102,255,0.08); border-color:rgba(0,102,255,0.3); color:#66aaff">
+      While competitors debate architecture, we're live. While they're still building, bots will be running strategies on 2xSwap.
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 10: CTA ===== -->
+  <div class="slide" data-slide="10">
+    <div class="cta-card animate-in">
+      <div style="font-size:48px; margin-bottom:16px">⚡</div>
+      <div class="cta-title">Build on 2xSwap</div>
+      <div class="cta-sub">SDK documentation coming Q4 2026.<br>Get early access — reach out now.</div>
+
+      <div class="badges animate-in" style="margin-bottom:28px">
+        <span class="badge warn">🔜 Bot SDK — Q4 2026</span>
+        <span class="badge">✅ Live Now</span>
+      </div>
+
+      <div class="cta-links">
+        <a class="cta-link" href="mailto:didar@2xswap.com">
+          <span class="cta-link-icon">✉️</span>
+          didar@2xswap.com
+        </a>
+        <a class="cta-link" href="https://2xswap.com" target="_blank">
+          <span class="cta-link-icon">🌐</span>
+          2xswap.com
+        </a>
+      </div>
+
+      <div style="margin-top:32px; font-size:13px; color:var(--secondary); line-height:1.6">
+        Early partners get priority SDK access and<br>
+        <span style="color:var(--green); font-weight:600">co-development opportunities</span> on the Bot Platform
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#slides -->
+
+<script>
+  const TOTAL = 10;
+  let current = 1;
+  let isAnimating = false;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  const progressBar = document.getElementById('progress-bar');
+  const currentNum = document.getElementById('current-num');
+  const totalNum = document.getElementById('total-num');
+  const navPrev = document.getElementById('nav-prev');
+  const navNext = document.getElementById('nav-next');
+  totalNum.textContent = TOTAL;
+
+  function updateUI() {
+    progressBar.style.width = (current / TOTAL * 100) + '%';
+    currentNum.textContent = current;
+    navPrev.classList.toggle('hidden', current === 1);
+    navNext.classList.toggle('hidden', current === TOTAL);
+  }
+
+  function navigate(dir) {
+    if (isAnimating) return;
+    const next = current + dir;
+    if (next < 1 || next > TOTAL) return;
+    isAnimating = true;
+
+    const currentSlide = document.querySelector('.slide.active');
+    const nextSlide = document.querySelector(`[data-slide="${next}"]`);
+
+    // Reset animation states on next slide children
+    nextSlide.querySelectorAll('.animate-in').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+    });
+
+    // Position next slide
+    nextSlide.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
+    nextSlide.style.opacity = '0';
+    nextSlide.style.pointerEvents = 'none';
+
+    // Trigger
+    requestAnimationFrame(() => {
+      currentSlide.classList.add(dir > 0 ? 'exit-left' : 'exit-right');
+      currentSlide.classList.remove('active');
+
+      nextSlide.classList.add('active');
+
+      current = next;
+      updateUI();
+
+      // Re-trigger animations
+      nextSlide.querySelectorAll('.animate-in').forEach(el => {
+        el.style.opacity = '';
+        el.style.transform = '';
+      });
+
+      setTimeout(() => {
+        currentSlide.classList.remove('exit-left', 'exit-right');
+        isAnimating = false;
+      }, 550);
+    });
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+  });
+
+  // Touch / Swipe
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      navigate(dx < 0 ? 1 : -1);
+    }
+  }, { passive: true });
+
+  // Click anywhere to advance (not on links/buttons)
+  document.getElementById('slides').addEventListener('click', e => {
+    if (e.target.closest('a, button, .nav-arrow')) return;
+    const x = e.clientX / window.innerWidth;
+    navigate(x > 0.5 ? 1 : -1);
+  });
+
+  // Lever bar animations on slide 5 load
+  function animateLeverBars() {
+    document.querySelectorAll('.lev-bar-fill').forEach(bar => {
+      const target = bar.style.width;
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.width = target; }, 400);
+    });
+  }
+
+  // Observe slide changes for special animations
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(m => {
+      if (m.target.classList.contains('active') && m.target.dataset.slide === '5') {
+        setTimeout(animateLeverBars, 300);
+      }
+    });
+  });
+
+  document.querySelectorAll('.slide').forEach(slide => {
+    observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  // Init
+  updateUI();
+  setTimeout(animateLeverBars, 0); // in case slide 5 is first (shouldn't be, but safe)
+</script>
+</body>
+</html>
