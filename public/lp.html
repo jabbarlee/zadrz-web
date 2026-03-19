@@ -33,6 +33,7 @@
     color: var(--white);
     font-family: var(--font);
     -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
   }
 
   /* ===== PROGRESS BAR ===== */
@@ -682,24 +683,82 @@
 
   /* Mobile adjustments */
   @media (max-width: 768px) {
-    .slide { padding: 50px 20px 80px; }
+    .slide { padding: 40px 16px 70px; }
+    .section-title { font-size: 22px !important; }
     .trade-layout { grid-template-columns: 1fr; gap: 16px; }
     .flow-diagram { gap: 0; }
-    .flow-box { min-width: 80px; max-width: 100px; padding: 12px 10px; }
-    .flow-box .icon { font-size: 22px; }
-    .flow-box .value { font-size: 13px; }
-    .flow-arrow { font-size: 16px; padding: 0 4px; }
+    .flow-box { min-width: 70px; max-width: 90px; padding: 10px 8px; }
+    .flow-box .icon { font-size: 20px; }
+    .flow-box .value { font-size: 12px; }
+    .flow-arrow { font-size: 14px; padding: 0 3px; }
     .risk-cards { grid-template-columns: 1fr; }
     .icon-cards { flex-direction: column; align-items: center; }
     .steps-flow { flex-direction: column; align-items: center; }
     .step-connector { padding-top: 0; transform: rotate(90deg); }
-    .contact-card { padding: 36px 28px; }
+    .contact-card { padding: 28px 20px; }
     .bank-flow { grid-template-columns: 1fr; }
-    .center-event { width: 90px; height: 90px; }
+    .center-event { width: 80px; height: 80px; }
     .trade-left, .trade-right, .trade-center { width: 100%; }
+    .nav-arrow { width: 36px; height: 36px; font-size: 15px; }
+    #nav-prev { left: 8px; }
+    #nav-next { right: 8px; }
+    #slide-counter { bottom: 16px; right: 16px; font-size: 11px; }
+    
+    /* Architecture slide - stack vertically on mobile */
+    .arch-layout { flex-direction: column !important; align-items: center !important; gap: 16px !important; }
+    .arch-traders { max-width: 100% !important; flex-direction: row !important; gap: 8px !important; }
+    .arch-traders > div:first-child { margin-bottom: 0 !important; }
+    .arch-trader-card { padding: 10px 12px !important; }
+    .arch-center { flex: none !important; width: 100% !important; max-width: 300px !important; }
+    .arch-center > div { padding: 20px 16px !important; }
+    .arch-arrows { flex-direction: row !important; padding: 4px 0 !important; }
+    .arch-arrows > div { writing-mode: horizontal-tb !important; }
+    .arch-pool-section { max-width: 100% !important; }
+    .arch-pool-box { padding: 14px !important; }
+    .arch-pool-amount { font-size: 20px !important; }
+    .arch-lp-grid { gap: 6px !important; }
+
+    /* Money boxes on trade example slide */
+    .money-box { width: 140px !important; }
+    .money-box .amount { font-size: 18px !important; }
+    .plus-sign { font-size: 18px !important; }
+
+    /* Loss table */
+    table { font-size: 13px !important; }
+    td, th { padding: 8px 10px !important; }
+
+    /* Timeline */
+    .timeline-item { padding-left: 50px !important; }
   }
 
-  /* Slide 6 timeline on mobile */
+  @media (max-width: 480px) {
+    .slide { padding: 32px 12px 60px; overflow-y: auto; justify-content: flex-start; padding-top: 50px; }
+    .section-title { font-size: 18px !important; }
+    .slide-title { font-size: 10px !important; }
+    
+    /* Architecture slide - fully stacked */
+    .arch-traders { flex-direction: column !important; }
+    .arch-trader-card { flex-direction: row !important; gap: 8px !important; padding: 8px 12px !important; }
+    .arch-arrows { gap: 2px !important; }
+    .arch-arrows div { font-size: 10px !important; }
+    .arch-arrows div:nth-child(even) { font-size: 20px !important; }
+    .arch-lp-grid > div { padding: 6px !important; }
+    
+    /* Trade example - stack fully */
+    .money-box { width: 120px !important; }
+    .money-box .amount { font-size: 16px !important; }
+    .money-box .desc { font-size: 10px !important; }
+    
+    /* Make table scrollable */
+    table { font-size: 12px !important; }
+    
+    .key-message { font-size: 13px !important; padding: 12px 16px !important; }
+    .icon-card { padding: 16px !important; }
+    .risk-card { padding: 16px !important; }
+    .step-box { padding: 14px !important; }
+  }
+
+  /* Slide 7 timeline on mobile */
   @media (max-width: 600px) {
     .timeline::before { left: 18px; }
     .timeline-dot { width: 36px; height: 36px; font-size: 14px; }
@@ -875,10 +934,10 @@
     </div>
 
     <div class="animate-in" style="width:100%;max-width:1000px;margin:30px auto 0;">
-      <div style="display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:nowrap;">
+      <div class="arch-layout" style="display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:nowrap;">
 
         <!-- LEFT: Трейдеры -->
-        <div style="flex:1;max-width:260px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div class="arch-traders" style="flex:1;max-width:260px;display:flex;flex-direction:column;align-items:center;gap:12px;">
           <div style="font-size:13px;text-transform:uppercase;letter-spacing:0.1em;color:var(--secondary);margin-bottom:8px;">Трейдеры</div>
           <div style="background:rgba(0,102,255,0.12);border:1px solid rgba(0,102,255,0.3);border-radius:var(--radius);padding:14px 18px;width:100%;text-align:center;">
             <div style="font-size:28px;margin-bottom:6px;">👤</div>
@@ -899,7 +958,7 @@
         </div>
 
         <!-- ARROWS LEFT → CENTER -->
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;">
+        <div class="arch-arrows" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;">
           <div style="font-size:11px;color:var(--green);margin-bottom:4px;white-space:nowrap;">свои $10K</div>
           <div style="font-size:28px;color:var(--primary);">→</div>
           <div style="font-size:11px;color:var(--secondary);margin-top:4px;white-space:nowrap;">прибыль 80%</div>
@@ -907,7 +966,7 @@
         </div>
 
         <!-- CENTER: 2xSwap протокол -->
-        <div style="flex:0 0 220px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="arch-center" style="flex:0 0 220px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
           <div style="background:linear-gradient(135deg, rgba(0,102,255,0.2), rgba(0,102,255,0.05));border:2px solid var(--primary);border-radius:16px;padding:28px 20px;text-align:center;width:100%;box-shadow:0 0 30px var(--primary-glow);">
             <div style="font-size:32px;font-weight:800;background:linear-gradient(135deg,#fff,#88bbff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;">2xSwap</div>
             <div style="font-size:11px;color:var(--secondary);line-height:1.4;">Смарт-контракт на Ethereum</div>
@@ -929,7 +988,7 @@
         </div>
 
         <!-- ARROWS CENTER ↔ RIGHT -->
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;">
+        <div class="arch-arrows" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;">
           <div style="font-size:11px;color:var(--warn);margin-bottom:4px;white-space:nowrap;">даёт $10K</div>
           <div style="font-size:28px;color:var(--warn);">←</div>
           <div style="font-size:11px;color:var(--green);margin-top:8px;white-space:nowrap;">+20% прибыли</div>
@@ -937,7 +996,7 @@
         </div>
 
         <!-- RIGHT: Пул (сначала) → потом LP за ним -->
-        <div style="flex:1;max-width:320px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div class="arch-pool-section" style="flex:1;max-width:320px;display:flex;flex-direction:column;align-items:center;gap:12px;">
           <!-- ПУЛ — главный элемент -->
           <div style="font-size:13px;text-transform:uppercase;letter-spacing:0.1em;color:var(--secondary);margin-bottom:4px;">Пул ликвидности</div>
           <div style="background:linear-gradient(135deg, rgba(255,170,0,0.15), rgba(255,170,0,0.03));border:2px solid rgba(255,170,0,0.4);border-radius:16px;padding:20px;width:100%;text-align:center;box-shadow:0 0 20px var(--warn-glow);">
