@@ -705,23 +705,28 @@
     #slide-counter { bottom: 16px; right: 16px; font-size: 11px; }
     
     /* Architecture slide - stack vertically on mobile */
-    .arch-layout { flex-direction: column !important; align-items: center !important; gap: 16px !important; }
-    .arch-traders { max-width: 100% !important; flex-direction: row !important; gap: 8px !important; }
+    .arch-layout { flex-direction: column !important; align-items: center !important; gap: 12px !important; }
+    .arch-traders { max-width: 100% !important; flex-direction: row !important; gap: 6px !important; flex-wrap: wrap !important; justify-content: center !important; }
     .arch-traders > div:first-child { margin-bottom: 0 !important; }
-    .arch-trader-card { padding: 10px 12px !important; }
-    .arch-center { flex: none !important; width: 100% !important; max-width: 300px !important; }
-    .arch-center > div { padding: 20px 16px !important; }
-    .arch-arrows { flex-direction: row !important; padding: 4px 0 !important; }
-    .arch-arrows > div { writing-mode: horizontal-tb !important; }
+    .arch-center { flex: none !important; width: 100% !important; max-width: 280px !important; }
+    .arch-center > div { padding: 16px 14px !important; }
+    .arch-arrows { flex-direction: row !important; padding: 2px 0 !important; gap: 8px !important; }
+    .arch-arrows > div { font-size: 11px !important; }
+    .arch-arrows > div:nth-child(even) { font-size: 22px !important; transform: rotate(90deg); }
     .arch-pool-section { max-width: 100% !important; }
-    .arch-pool-box { padding: 14px !important; }
-    .arch-pool-amount { font-size: 20px !important; }
     .arch-lp-grid { gap: 6px !important; }
 
+    /* Trade example slide - stack vertically */
+    .trade-flow { flex-direction: column !important; align-items: center !important; gap: 8px !important; }
+    .trade-flow .center-event { width: 70px !important; height: 70px !important; }
+    .trade-flow > div:nth-child(2) { flex-direction: row !important; }
+    .trade-flow > div:nth-child(2) > div { transform: rotate(90deg); }
+
     /* Money boxes on trade example slide */
-    .money-box { width: 140px !important; }
+    .money-box { width: 160px !important; }
     .money-box .amount { font-size: 18px !important; }
-    .plus-sign { font-size: 18px !important; }
+    .money-box .desc { font-size: 10px !important; }
+    .plus-sign { font-size: 16px !important; }
 
     /* Loss table */
     table { font-size: 13px !important; }
@@ -1044,12 +1049,12 @@
   <!-- ===== SLIDE 5: ПРИМЕР СДЕЛКИ ===== -->
   <div class="slide" id="slide-5">
     <div class="animate-in">
-      <div class="slide-title" style="text-align:center;">СЛАЙД 4</div>
+      <div class="slide-title" style="text-align:center;">СЛАЙД 5</div>
       <h2 class="section-title">Пример сделки — наглядно</h2>
     </div>
 
     <div class="animate-in" style="width:100%;max-width:900px;margin:20px auto 0;">
-      <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <div class="trade-flow" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
 
         <!-- LEFT: вклады -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-width:170px;">
