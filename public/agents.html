@@ -1118,36 +1118,34 @@
     <div class="section-title animate-in">How 2xSwap Works <span style="color:var(--primary)">For Bots</span></div>
 
     <div class="arch-diagram animate-in">
-      <!-- Left: Bots -->
+      <!-- Left: Bots + Strategies -->
       <div class="arch-col">
-        <div class="arch-col-title">AI Bots</div>
+        <div class="arch-col-title">AI Bots + Strategies</div>
         <div class="bot-card">
-          <div class="bot-name">Bot 1</div>
-          <div class="bot-strat">Mean Reversion BTC</div>
+          <div class="bot-name">🤖 Custom Bot</div>
+          <div class="bot-strat">Brings own strategy via SDK</div>
         </div>
-        <div class="bot-card">
-          <div class="bot-name">Bot 2</div>
-          <div class="bot-strat">Momentum ETH</div>
+        <div style="text-align:center;font-size:11px;color:var(--secondary);padding:4px 0;">— or —</div>
+        <div class="bot-card" style="border-color:rgba(0,204,102,0.3);background:rgba(0,204,102,0.06);">
+          <div class="bot-name" style="color:var(--green);">📦 Platform Presets</div>
+          <div class="bot-strat">Mean Reversion · Momentum · VWAP · Grid</div>
         </div>
-        <div class="bot-card">
-          <div class="bot-name">Bot 3</div>
-          <div class="bot-strat">VWAP NVDA</div>
-        </div>
+        <div style="font-size:11px;color:var(--secondary);text-align:center;margin-top:6px;">Bot selects strategy → submits to protocol</div>
       </div>
 
       <!-- Arrow Left -->
       <div class="arch-arrow-h">
         <div class="ah-symbol">→</div>
-        <div class="ah-label">Send $10K + get $10K from pool</div>
+        <div class="ah-label">Strategy + capital</div>
       </div>
 
-      <!-- Center: Protocol -->
+      <!-- Center: Matching Engine -->
       <div class="arch-col">
         <div class="arch-col-title">2xSwap Protocol</div>
         <div class="protocol-box">
-          <div class="proto-title">⚡ Smart Contract</div>
-          <div class="proto-sub">Co-investment engine</div>
-          <div class="asset-tags">
+          <div class="proto-title">⚡ Matching Engine</div>
+          <div class="proto-sub">Matches bot capital with pool capital</div>
+          <div class="asset-tags" style="margin-top:10px;">
             <span class="asset-tag">BTC</span>
             <span class="asset-tag">ETH</span>
             <span class="asset-tag">NVDA</span>
@@ -1155,14 +1153,18 @@
             <span class="asset-tag">TSLA</span>
             <span class="asset-tag">AMZN</span>
           </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:4px;">
+            <div style="font-size:10px;background:rgba(0,102,255,0.12);color:#88bbff;border-radius:5px;padding:4px 8px;text-align:center;">📊 Dynamic profit share by asset</div>
+            <div style="font-size:10px;background:rgba(255,170,0,0.12);color:var(--warn);border-radius:5px;padding:4px 8px;text-align:center;">⏱️ Dynamic duration by asset</div>
+            <div style="font-size:10px;background:rgba(0,204,102,0.12);color:var(--green);border-radius:5px;padding:4px 8px;text-align:center;">📐 Dynamic leverage by volatility</div>
+          </div>
         </div>
-        <div style="text-align:center; font-size:12px; color:var(--secondary); margin-top:8px">Buys real assets on Uniswap</div>
       </div>
 
       <!-- Arrow Right -->
       <div class="arch-arrow-h">
         <div class="ah-symbol">←</div>
-        <div class="ah-label">LPs provide capital</div>
+        <div class="ah-label">Matched capital</div>
       </div>
 
       <!-- Right: LP Pool -->
@@ -1176,18 +1178,9 @@
       </div>
     </div>
 
-    <!-- Mobile arrows -->
-    <div style="display:none" class="arch-arrow-h-mob">↓</div>
-
-    <div class="profit-split animate-in">
-      <div class="split-card trader">
-        <span class="split-pct">80%</span>
-        <div class="split-label">Bot's profit share</div>
-      </div>
-      <div style="display:flex;align-items:center;font-size:20px;color:var(--secondary)">÷</div>
-      <div class="split-card lp">
-        <span class="split-pct">20%</span>
-        <div class="split-label">LP's yield</div>
+    <div class="animate-in" style="margin-top:16px;">
+      <div class="key-message">
+        Bot picks a strategy → Protocol calculates terms (leverage, profit split, duration) based on asset volatility → Pool capital is matched automatically.
       </div>
     </div>
   </div>
