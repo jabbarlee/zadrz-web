@@ -1,116 +1,1284 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2xSwap — LP Opportunity</title>
+<title>2xSwap — Питч для инвесторов</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #070d1a; color: #e8f0fe; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-  .container { max-width: 760px; margin: 0 auto; padding: 60px 24px; }
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .badge { display: inline-block; background: #0d2a5e; color: #8AB6F9; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 28px; }
-  h1 { font-size: 42px; font-weight: 700; line-height: 1.2; color: #fff; margin-bottom: 16px; }
-  h1 span { color: #8AB6F9; }
-  .sub { font-size: 18px; color: #8AB6F9; margin-bottom: 48px; line-height: 1.6; }
+  :root {
+    --bg: #0a0e1a;
+    --primary: #0066FF;
+    --primary-glow: rgba(0, 102, 255, 0.25);
+    --green: #00CC66;
+    --green-glow: rgba(0, 204, 102, 0.2);
+    --red: #FF4444;
+    --red-glow: rgba(255, 68, 68, 0.2);
+    --warn: #FFaa00;
+    --warn-glow: rgba(255, 170, 0, 0.2);
+    --white: #ffffff;
+    --secondary: #8899aa;
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+    --radius: 12px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
 
-  .divider { height: 1px; background: #0d2a5e; margin: 40px 0; }
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
 
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
-  .card { background: #0b1a3a; border: 1px solid #0d2a5e; border-radius: 12px; padding: 24px; }
-  .card .num { font-size: 32px; font-weight: 700; color: #8AB6F9; }
-  .card .label { font-size: 14px; color: #6b82a8; margin-top: 4px; }
-  .card .desc { font-size: 14px; color: #cadcfc; margin-top: 10px; line-height: 1.5; }
+  /* ===== PROGRESS BAR ===== */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #00AAFF);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index: 100;
+    box-shadow: 0 0 12px var(--primary);
+  }
 
-  .how { margin-bottom: 40px; }
-  .how h2 { font-size: 22px; font-weight: 600; margin-bottom: 20px; color: #fff; }
-  .step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
-  .step .n { width: 28px; height: 28px; border-radius: 50%; background: #0d2a5e; color: #8AB6F9; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-  .step .txt { font-size: 15px; color: #cadcfc; line-height: 1.6; }
-  .step .txt strong { color: #fff; }
+  /* ===== SLIDE COUNTER ===== */
+  #slide-counter {
+    position: fixed;
+    bottom: 28px; right: 32px;
+    font-size: 13px;
+    color: var(--secondary);
+    letter-spacing: 0.05em;
+    z-index: 100;
+    font-variant-numeric: tabular-nums;
+  }
+  #slide-counter span { color: var(--white); font-weight: 600; }
 
-  .why { background: #0b1a3a; border: 1px solid #0d2a5e; border-radius: 12px; padding: 28px; margin-bottom: 40px; }
-  .why h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #fff; }
-  .why ul { list-style: none; }
-  .why ul li { padding: 8px 0; font-size: 15px; color: #cadcfc; border-bottom: 1px solid #0d2a5e; }
-  .why ul li:last-child { border-bottom: none; }
-  .why ul li::before { content: "→ "; color: #8AB6F9; font-weight: 700; }
+  /* ===== NAV ARROWS ===== */
+  .nav-arrow {
+    position: fixed;
+    top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: background 0.2s, opacity 0.2s;
+    color: var(--secondary);
+    font-size: 18px;
+    user-select: none;
+  }
+  .nav-arrow:hover { background: rgba(0,102,255,0.2); color: var(--white); }
+  .nav-arrow.hidden { opacity: 0; pointer-events: none; }
+  #nav-prev { left: 20px; }
+  #nav-next { right: 20px; }
 
-  .cta { text-align: center; padding: 40px 0; }
-  .cta p { font-size: 16px; color: #6b82a8; margin-bottom: 20px; }
-  .cta a { display: inline-block; background: #8AB6F9; color: #070d1a; font-weight: 700; font-size: 16px; padding: 14px 36px; border-radius: 8px; text-decoration: none; }
-  .cta .sec { display: block; margin-top: 14px; font-size: 13px; color: #6b82a8; }
+  /* ===== SLIDES CONTAINER ===== */
+  #slides {
+    width: 100%; height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
 
-  .footer { border-top: 1px solid #0d2a5e; padding-top: 24px; font-size: 13px; color: #3d5275; text-align: center; }
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    transform: translateX(60px);
+    background: radial-gradient(ellipse at 60% 20%, rgba(0,102,255,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(0,204,102,0.04) 0%, transparent 50%),
+                var(--bg);
+  }
 
-  @media (max-width: 520px) {
-    .cards { grid-template-columns: 1fr; }
-    h1 { font-size: 30px; }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+  }
+
+  .slide.exit-left { opacity: 0; transform: translateX(-60px); }
+  .slide.exit-right { opacity: 0; transform: translateX(60px); }
+
+  /* ===== SLIDE ENTRY ANIMATIONS ===== */
+  .slide.active .animate-in {
+    animation: slideUp 0.6s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide.active .animate-in:nth-child(1) { animation-delay: 0.05s; }
+  .slide.active .animate-in:nth-child(2) { animation-delay: 0.15s; }
+  .slide.active .animate-in:nth-child(3) { animation-delay: 0.25s; }
+  .slide.active .animate-in:nth-child(4) { animation-delay: 0.35s; }
+  .slide.active .animate-in:nth-child(5) { animation-delay: 0.45s; }
+  .slide.active .animate-in:nth-child(6) { animation-delay: 0.55s; }
+
+  /* ===== TYPOGRAPHY ===== */
+  .slide-title {
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 700;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  .big-title {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #88aaff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--secondary);
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .section-title {
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .key-message {
+    font-size: clamp(14px, 1.8vw, 18px);
+    color: var(--secondary);
+    text-align: center;
+    max-width: 700px;
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+
+  .key-message strong { color: var(--white); }
+
+  /* ===== BADGES ===== */
+  .badges {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .badge {
+    background: rgba(0,204,102,0.12);
+    border: 1px solid rgba(0,204,102,0.3);
+    color: var(--green);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  /* ===== FLOW DIAGRAM ===== */
+  .flow-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .flow-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 110px;
+    max-width: 140px;
+    position: relative;
+  }
+
+  .flow-box .icon { font-size: 28px; margin-bottom: 6px; display: block; }
+  .flow-box .label { font-size: 13px; color: var(--secondary); line-height: 1.4; }
+  .flow-box .value { font-size: 15px; font-weight: 700; color: var(--white); margin-top: 4px; }
+
+  .flow-box.highlight {
+    border-color: rgba(0,102,255,0.4);
+    background: rgba(0,102,255,0.08);
+    box-shadow: 0 0 24px rgba(0,102,255,0.15);
+  }
+
+  .flow-box.green {
+    border-color: rgba(0,204,102,0.4);
+    background: rgba(0,204,102,0.08);
+  }
+
+  .flow-arrow {
+    color: var(--secondary);
+    font-size: 22px;
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+
+  /* ===== FLOW ROW LABEL ===== */
+  .flow-row-label {
+    font-size: 12px;
+    color: var(--secondary);
+    text-align: center;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ===== EXAMPLE TRADE LAYOUT ===== */
+  .trade-layout {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 0;
+    align-items: center;
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  .trade-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .trade-section-title {
+    font-size: 12px;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .money-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .money-box .amount {
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 800;
+    color: var(--white);
+    display: block;
+  }
+
+  .money-box .desc {
+    font-size: 12px;
+    color: var(--secondary);
+    margin-top: 3px;
+  }
+
+  .money-box.trader { border-color: rgba(0,102,255,0.4); background: rgba(0,102,255,0.08); }
+  .money-box.pool-money { border-color: rgba(255,170,0,0.4); background: rgba(255,170,0,0.08); }
+  .money-box.pool-money .amount { color: var(--warn); }
+  .money-box.result { border-color: rgba(0,204,102,0.4); background: rgba(0,204,102,0.08); }
+  .money-box.result .amount { color: var(--green); }
+  .money-box.total-buy { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); }
+  .money-box.profit-trader { border-color: rgba(0,102,255,0.4); background: rgba(0,102,255,0.08); }
+  .money-box.profit-trader .amount { color: #66aaff; }
+  .money-box.profit-pool { border-color: rgba(0,204,102,0.4); background: rgba(0,204,102,0.08); }
+  .money-box.profit-pool .amount { color: var(--green); }
+
+  .center-event {
+    background: linear-gradient(135deg, rgba(0,204,102,0.15), rgba(0,204,102,0.05));
+    border: 1px solid rgba(0,204,102,0.4);
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 30px rgba(0,204,102,0.2);
+  }
+
+  .center-event .event-label { font-size: 11px; color: var(--secondary); }
+  .center-event .event-value { font-size: 22px; font-weight: 800; color: var(--green); }
+
+  /* ===== PLUS CONNECTOR ===== */
+  .plus-sign {
+    font-size: 24px;
+    color: var(--secondary);
+    text-align: center;
+    padding: 4px 0;
+  }
+
+  .equals-sign {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    padding: 0 16px;
+  }
+
+  /* ===== RISK TABLE ===== */
+  .risk-table {
+    width: 100%;
+    max-width: 800px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+  }
+
+  .risk-table th {
+    background: rgba(255,255,255,0.06);
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    color: var(--secondary);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .risk-table td {
+    padding: 14px 20px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+
+  .risk-table tr:last-child td { border-bottom: none; }
+  .risk-table tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .risk-table tr:nth-child(even) td { background: transparent; }
+
+  .risk-table td:first-child { font-weight: 700; color: var(--white); }
+
+  .loss-red { color: var(--red); font-weight: 700; }
+  .loss-safe { color: var(--green); font-weight: 700; }
+  .loss-warn { color: var(--warn); font-weight: 700; }
+
+  .loss-cell-1 { background: rgba(255,68,68,0.06) !important; }
+  .loss-cell-2 { background: rgba(255,68,68,0.10) !important; }
+  .loss-cell-3 { background: rgba(255,68,68,0.16) !important; }
+  .loss-cell-4 { background: rgba(255,68,68,0.22) !important; }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 680px;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--primary), rgba(0,102,255,0.1));
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px 0;
+    position: relative;
+  }
+
+  .timeline-dot {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 16px;
+    flex-shrink: 0;
+    box-shadow: 0 0 20px rgba(0,102,255,0.4);
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-content {
+    padding-top: 10px;
+  }
+
+  .timeline-content .t-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .timeline-content .t-sub {
+    font-size: 13px;
+    color: var(--secondary);
+    margin-top: 3px;
+  }
+
+  .timeline-content .t-highlight {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* ===== ICON CARDS (Slide 7) ===== */
+  .icon-cards {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .icon-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 36px 28px;
+    flex: 1;
+    min-width: 220px;
+    max-width: 260px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .icon-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .icon-card .card-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+  .icon-card .card-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+  .icon-card .card-desc { font-size: 14px; color: var(--secondary); line-height: 1.6; }
+
+  /* ===== STEPS (Slide 8) ===== */
+  .steps-flow {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+    max-width: 900px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    min-width: 160px;
+    max-width: 200px;
+    padding: 0 8px;
+  }
+
+  .step-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #0044aa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 14px;
+    box-shadow: 0 8px 24px rgba(0,102,255,0.35);
+    position: relative;
+  }
+
+  .step-number {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 22px;
+    height: 22px;
+    background: var(--warn);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+  }
+
+  .step-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .step-sub { font-size: 12px; color: var(--secondary); line-height: 1.5; }
+
+  .step-connector {
+    font-size: 24px;
+    color: var(--secondary);
+    padding: 0 4px;
+    padding-top: 24px;
+    flex-shrink: 0;
+  }
+
+  /* ===== WARNING BOX ===== */
+  .warning-box {
+    background: rgba(255,170,0,0.08);
+    border: 1px solid rgba(255,170,0,0.35);
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    font-size: 14px;
+    color: var(--warn);
+    max-width: 700px;
+    text-align: center;
+    line-height: 1.6;
+    width: 100%;
+  }
+
+  /* ===== RISK CARDS GRID ===== */
+  .risk-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .risk-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: transform 0.2s;
+  }
+
+  .risk-card:hover { transform: translateY(-2px); }
+
+  .risk-card-icon { font-size: 32px; flex-shrink: 0; }
+  .risk-card-body { }
+  .risk-card-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .risk-card-desc { font-size: 13px; color: var(--secondary); line-height: 1.5; }
+
+  /* ===== CONTACT SLIDE ===== */
+  .contact-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 48px 60px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+  }
+
+  .contact-card .q-title { font-size: 28px; font-weight: 700; margin-bottom: 32px; }
+  .contact-link {
+    display: block;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: opacity 0.2s;
+  }
+  .contact-link:hover { opacity: 0.7; }
+  .contact-hint { font-size: 14px; color: var(--secondary); margin-top: 24px; }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    border-radius: 2px;
+    margin: 12px auto;
+  }
+
+  /* Slide 4 specific layout */
+  .trade-left, .trade-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .trade-center {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .combined-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .combined-box .cb-label { font-size: 12px; color: var(--secondary); margin-bottom: 4px; }
+  .combined-box .cb-value { font-size: 20px; font-weight: 800; }
+
+  .profit-split {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* Slide 2 & 3 flow specific */
+  .bank-flow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    max-width: 860px;
+    position: relative;
+  }
+
+  .flow-label-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    max-width: 860px;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .slide { padding: 50px 20px 80px; }
+    .trade-layout { grid-template-columns: 1fr; gap: 16px; }
+    .flow-diagram { gap: 0; }
+    .flow-box { min-width: 80px; max-width: 100px; padding: 12px 10px; }
+    .flow-box .icon { font-size: 22px; }
+    .flow-box .value { font-size: 13px; }
+    .flow-arrow { font-size: 16px; padding: 0 4px; }
+    .risk-cards { grid-template-columns: 1fr; }
+    .icon-cards { flex-direction: column; align-items: center; }
+    .steps-flow { flex-direction: column; align-items: center; }
+    .step-connector { padding-top: 0; transform: rotate(90deg); }
+    .contact-card { padding: 36px 28px; }
+    .bank-flow { grid-template-columns: 1fr; }
+    .center-event { width: 90px; height: 90px; }
+    .trade-left, .trade-right, .trade-center { width: 100%; }
+  }
+
+  /* Slide 6 timeline on mobile */
+  @media (max-width: 600px) {
+    .timeline::before { left: 18px; }
+    .timeline-dot { width: 36px; height: 36px; font-size: 14px; }
+  }
+
+  /* Subtle noise texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+    opacity: 0.4;
   }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <div class="badge">🔴 Mainnet Live — Feb 2026</div>
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
 
-  <h1>Earn yield from <span>leveraged traders.</span><br>Without taking their risk.</h1>
-  <p class="sub">2xSwap is a 2x leverage protocol with no liquidation mechanism. LPs provide liquidity — traders pay fees. You earn. No liquidation cascades to worry about.</p>
+<!-- Slide Counter -->
+<div id="slide-counter"><span id="current-slide">1</span> / 10</div>
 
-  <div class="cards">
-    <div class="card">
-      <div class="num">80/20</div>
-      <div class="label">Fee split at launch</div>
-      <div class="desc">80% of trading fees go to LPs. Shifts toward 50/50 as utilization grows.</div>
+<!-- Navigation Arrows -->
+<div class="nav-arrow hidden" id="nav-prev" onclick="navigate(-1)">&#8592;</div>
+<div class="nav-arrow" id="nav-next" onclick="navigate(1)">&#8594;</div>
+
+<!-- ===================== SLIDES ===================== -->
+<div id="slides">
+
+  <!-- ===== SLIDE 1: TITLE ===== -->
+  <div class="slide active" id="slide-1">
+    <div class="animate-in" style="margin-bottom:8px;">
+      <div class="slide-title" style="text-align:center;letter-spacing:0.15em;">ИНВЕСТИЦИОННЫЙ ПИТЧ</div>
     </div>
-    <div class="card">
-      <div class="num">95%</div>
-      <div class="label">Max pool utilization</div>
-      <div class="desc">High capital efficiency. Your idle capital is always working.</div>
+    <div class="animate-in">
+      <div class="big-title" style="text-align:center;">2xSwap</div>
     </div>
-    <div class="card">
-      <div class="num">ERC-4626</div>
-      <div class="label">Standard vault</div>
-      <div class="desc">Your LP tokens (2xLP) follow the ERC-4626 standard. Auditable, composable, transparent.</div>
+    <div class="animate-in" style="margin-top:20px;margin-bottom:32px;">
+      <div class="divider"></div>
+      <p class="subtitle" style="margin-top:16px;">Альтернатива банковскому депозиту<br>с разделением прибыли</p>
     </div>
-    <div class="card">
-      <div class="num">2×</div>
-      <div class="label">Points multiplier</div>
-      <div class="desc">Early LPs earn loyalty multipliers (1x → 2x over 30 days). Points matter post-launch.</div>
+    <div class="animate-in">
+      <div class="badges">
+        <div class="badge">✅ Работает на Ethereum</div>
+        <div class="badge">✅ Аудит пройден</div>
+      </div>
     </div>
   </div>
 
-  <div class="divider"></div>
+  <!-- ===== SLIDE 2: КАК РАБОТАЕТ БАНК ===== -->
+  <div class="slide" id="slide-2">
+    <div class="animate-in">
+      <div class="slide-title" style="text-align:center;">СЛАЙД 2</div>
+      <h2 class="section-title">Как работает банковский депозит</h2>
+    </div>
 
-  <div class="how">
-    <h2>How it works for LPs</h2>
-    <div class="step"><div class="n">1</div><div class="txt"><strong>Deposit USDC</strong> into the X2Pool vault. Receive 2xLP tokens representing your share.</div></div>
-    <div class="step"><div class="n">2</div><div class="txt"><strong>Traders open leveraged positions</strong> by borrowing from your pool. They pay a fee on open + on close.</div></div>
-    <div class="step"><div class="n">3</div><div class="txt"><strong>Fees accumulate.</strong> When traders close positions (profit or loss), proceeds return to the pool + fees.</div></div>
-    <div class="step"><div class="n">4</div><div class="txt"><strong>Withdraw anytime</strong> — partial withdrawals supported. If utilization is high, withdraw up to available liquidity.</div></div>
+    <div class="animate-in" style="width:100%;max-width:860px;margin:24px auto 0;">
+      <!-- Top flow row -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:nowrap;">
+        <div class="flow-box highlight">
+          <span class="icon">🧑</span>
+          <div class="label">Вы</div>
+          <div class="value">$10 000</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">
+          <span class="icon">🏦</span>
+          <div class="label">Банк</div>
+          <div class="value">принимает</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">
+          <span class="icon">🏢</span>
+          <div class="label">Бизнесы</div>
+          <div class="value">кредит</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box green">
+          <span class="icon">💰</span>
+          <div class="label">Банк зарабатывает</div>
+          <div class="value" style="color:var(--green);">10–15%</div>
+        </div>
+        <div class="flow-arrow" style="transform:rotate(0deg);">→</div>
+        <div class="flow-box" style="border-color:rgba(255,170,0,0.4);background:rgba(255,170,0,0.08);">
+          <span class="icon">💵</span>
+          <div class="label">Платит вам</div>
+          <div class="value" style="color:var(--warn);">4–5%</div>
+        </div>
+      </div>
+
+      <!-- Разница badge -->
+      <div style="display:flex;justify-content:center;margin-top:24px;">
+        <div style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);border-radius:var(--radius);padding:12px 28px;text-align:center;">
+          <div style="font-size:12px;color:var(--secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em;">Разница остаётся в банке</div>
+          <div style="font-size:26px;font-weight:800;color:var(--red);">5–10% прибыли</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in" style="margin-top:28px;">
+      <p class="key-message">
+        <strong>Вы — кредитор.</strong> Банк платит фиксированный процент независимо от результата.<br>
+        Сколько бы банк ни заработал — вы получаете только 4–5%.
+      </p>
+    </div>
   </div>
 
-  <div class="why">
-    <h2>Why no-liquidation is good for LPs</h2>
-    <ul>
-      <li>Traders hold positions longer → more fee revenue for the pool</li>
-      <li>No liquidation cascades → pool doesn't take sudden losses from bad debt</li>
-      <li>Positions expire max 1 year → clean, predictable risk horizon</li>
-      <li>Oracle-validated pricing (Chainlink) → no manipulation risk</li>
-    </ul>
+  <!-- ===== SLIDE 3: КАК РАБОТАЕТ 2xSWAP ===== -->
+  <div class="slide" id="slide-3">
+    <div class="animate-in">
+      <div class="slide-title" style="text-align:center;">СЛАЙД 3</div>
+      <h2 class="section-title">Как работает <span style="color:var(--primary);">2xSwap</span></h2>
+    </div>
+
+    <div class="animate-in" style="width:100%;max-width:920px;margin:24px auto 0;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:nowrap;">
+        <div class="flow-box highlight">
+          <span class="icon">🧑</span>
+          <div class="label">Вы</div>
+          <div class="value">$10 000</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="border-color:rgba(0,102,255,0.4);background:rgba(0,102,255,0.12);">
+          <span class="icon">🏊</span>
+          <div class="label">Пул</div>
+          <div class="value">общий счёт</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">
+          <span class="icon">📈</span>
+          <div class="label">Трейдеры торгуют</div>
+          <div class="value">BTC/ETH</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box green">
+          <span class="icon">💸</span>
+          <div class="label">Прибыль делится</div>
+          <div class="value" style="color:var(--green);">80/20</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="border-color:rgba(0,204,102,0.4);background:rgba(0,204,102,0.1);">
+          <span class="icon">🎯</span>
+          <div class="label">Вы получаете</div>
+          <div class="value" style="color:var(--green);">20% прибыли</div>
+        </div>
+      </div>
+
+      <!-- Сравнение badge -->
+      <div style="display:flex;justify-content:center;margin-top:24px;">
+        <div style="background:rgba(0,204,102,0.1);border:1px solid rgba(0,204,102,0.3);border-radius:var(--radius);padding:12px 28px;text-align:center;">
+          <div style="font-size:12px;color:var(--secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em;">Ваша доля от прибыли сделок</div>
+          <div style="font-size:26px;font-weight:800;color:var(--green);">20% без ограничения сверху</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in" style="margin-top:28px;">
+      <p class="key-message">
+        <strong>Вы — со-участник.</strong> Доход зависит от результата сделок.<br>
+        Больше прибыльных сделок → больше зарабатываете.
+      </p>
+    </div>
   </div>
 
-  <div class="cta">
-    <p>Interested in being an anchor LP at launch?</p>
-    <a href="mailto:didar@2xswap.com">Talk to Didar → didar@2xswap.com</a>
-    <span class="sec">or visit 2xswap.com · contracts verified on Etherscan</span>
+  <!-- ===== SLIDE 4: ПРИМЕР СДЕЛКИ ===== -->
+  <div class="slide" id="slide-4">
+    <div class="animate-in">
+      <div class="slide-title" style="text-align:center;">СЛАЙД 4</div>
+      <h2 class="section-title">Пример сделки — наглядно</h2>
+    </div>
+
+    <div class="animate-in" style="width:100%;max-width:900px;margin:20px auto 0;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+
+        <!-- LEFT: вклады -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-width:170px;">
+          <div class="money-box trader" style="width:170px;">
+            <span class="desc">Трейдер вносит</span>
+            <span class="amount">$1 000</span>
+          </div>
+          <div class="plus-sign">+</div>
+          <div class="money-box pool-money" style="width:170px;">
+            <span class="desc">Из пула (ваши деньги)</span>
+            <span class="amount" style="color:var(--warn);">$1 000</span>
+          </div>
+          <div style="font-size:22px;font-weight:700;color:var(--secondary);padding:4px 0;">=</div>
+          <div class="money-box total-buy" style="width:170px;">
+            <span class="desc">Куплено BTC на</span>
+            <span class="amount">$2 000</span>
+          </div>
+        </div>
+
+        <!-- CENTER: событие -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <div style="font-size:24px;color:var(--secondary);">→</div>
+          <div class="center-event">
+            <span class="event-label">BTC вырос</span>
+            <span class="event-value">+10%</span>
+          </div>
+          <div style="font-size:24px;color:var(--secondary);">→</div>
+        </div>
+
+        <!-- RIGHT: прибыль -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-width:170px;">
+          <div style="font-size:12px;color:var(--secondary);text-transform:uppercase;letter-spacing:0.08em;">Прибыль $200</div>
+          <div class="money-box profit-trader" style="width:170px;">
+            <span class="desc">Трейдер получает (80%)</span>
+            <span class="amount" style="color:#66aaff;">$160</span>
+          </div>
+          <div style="font-size:14px;color:var(--secondary);">+</div>
+          <div class="money-box profit-pool" style="width:170px;">
+            <span class="desc">В пул (ваша доля, 20%)</span>
+            <span class="amount" style="color:var(--green);">$40</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="animate-in" style="margin-top:20px;width:100%;max-width:680px;background:rgba(0,204,102,0.08);border:1px solid rgba(0,204,102,0.25);border-radius:var(--radius);padding:16px 24px;text-align:center;">
+      <p style="font-size:15px;color:var(--secondary);line-height:1.6;">
+        Ваша доля пула растёт <strong style="color:var(--green);">автоматически</strong> с каждой прибыльной сделкой
+      </p>
+    </div>
   </div>
 
-  <div class="footer">
-    2xSwap · Ethereum Mainnet · Contract: 0x644bd18FE211A75756E35Ec5766163C7866fa0d0<br>
-    This is not financial advice. Liquidity provision involves risk.
+  <!-- ===== SLIDE 5: А ЕСЛИ ЦЕНА УПАДЁТ? ===== -->
+  <div class="slide" id="slide-5">
+    <div class="animate-in">
+      <div class="slide-title" style="text-align:center;">СЛАЙД 5</div>
+      <h2 class="section-title">А если цена упадёт?</h2>
+    </div>
+
+    <div class="animate-in" style="width:100%;max-width:800px;margin:24px auto 0;">
+      <table class="risk-table" style="width:100%;table-layout:fixed;">
+        <thead>
+          <tr>
+            <th style="width:33%;">BTC падает на:</th>
+            <th style="width:33%;">Трейдер теряет:</th>
+            <th style="width:33%;">Пул теряет:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700;color:var(--white);">10%</td>
+            <td class="loss-cell-1"><span class="loss-red">−$200</span></td>
+            <td class="loss-cell-1"><span class="loss-safe">$0 ✅</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--white);">20%</td>
+            <td class="loss-cell-2"><span class="loss-red">−$400</span></td>
+            <td class="loss-cell-2"><span class="loss-safe">$0 ✅</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--white);">40%</td>
+            <td class="loss-cell-3"><span class="loss-red">−$800</span></td>
+            <td class="loss-cell-3"><span class="loss-safe">$0 ✅</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--white);">50%+</td>
+            <td class="loss-cell-4"><span class="loss-red">Всё</span></td>
+            <td class="loss-cell-4"><span class="loss-warn">Начинает терять ⚠️</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="animate-in" style="margin-top:24px;padding:18px 32px;background:rgba(0,204,102,0.08);border:1px solid rgba(0,204,102,0.3);border-radius:var(--radius);max-width:600px;text-align:center;">
+      <p style="font-size:17px;font-weight:600;color:var(--white);line-height:1.5;">
+        🛡️ Трейдер теряет <strong style="color:var(--red);">свои деньги первым</strong>.<br>
+        Пул защищён до тех пор, пока у трейдера есть средства.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 6: ВАШИ $10,000 В ПУЛЕ ===== -->
+  <div class="slide" id="slide-6">
+    <div class="animate-in">
+      <div class="slide-title" style="text-align:center;">СЛАЙД 6</div>
+      <h2 class="section-title">Ваши $10 000 в пуле — как это выглядит</h2>
+    </div>
+
+    <div class="animate-in" style="width:100%;max-width:680px;margin:20px auto 0;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <div class="timeline-content">
+            <div class="t-title">Вы добавили <span class="t-highlight">$10 000</span> в пул</div>
+            <div class="t-sub">Общий пул: $100 000 · Ваша доля: <strong style="color:var(--white);">10%</strong></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-content">
+            <div class="t-title">Трейдеры торгуют, используя средства пула</div>
+            <div class="t-sub">Вам не нужно ничего делать — всё автоматически</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-content">
+            <div class="t-title">Прибыльные сделки увеличивают пул</div>
+            <div class="t-sub">Пул вырос: $100 000 → <span class="t-highlight">$102 000</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <div class="timeline-content">
+            <div class="t-title">Ваша доля автоматически растёт</div>
+            <div class="t-sub">10% от $102 000 = <span class="t-highlight" style="font-size:16px;font-weight:800;">$10 200</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--green);box-shadow:0 0 20px rgba(0,204,102,0.4);">✓</div>
+          <div class="timeline-content">
+            <div class="t-title" style="color:var(--green);">Забираете когда хотите</div>
+            <div class="t-sub">$10 000 вложений + <strong style="color:var(--green);">$200 дохода</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in" style="margin-top:20px;max-width:680px;text-align:center;">
+      <p class="key-message">
+        Работает как депозит: <strong>положили → деньги работают → забрали с прибылью.</strong><br>
+        Разница: доход не гарантирован, зависит от сделок.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 7: ГДЕ ХРАНЯТСЯ ДЕНЬГИ ===== -->
+  <div class="slide" id="slide-7">
+    <div class="animate-in">
+      <div class="slide-title" style="text-align:center;">СЛАЙД 7</div>
+      <h2 class="section-title">Где хранятся ваши деньги</h2>
+      <div class="divider" style="margin:12px auto;"></div>
+    </div>
+
+    <div class="animate-in" style="margin-top:16px;">
+      <div class="icon-cards">
+        <div class="icon-card" style="border-color:rgba(0,102,255,0.3);">
+          <span class="card-icon">🔒</span>
+          <div class="card-title">Смарт-контракт</div>
+          <div class="card-desc">Программа на Ethereum, которую <strong style="color:var(--white);">никто не может изменить</strong> — ни команда, ни хакеры</div>
+        </div>
+        <div class="icon-card" style="border-color:rgba(0,204,102,0.3);">
+          <span class="card-icon">👁️</span>
+          <div class="card-title">Полная прозрачность</div>
+          <div class="card-desc">Все операции <strong style="color:var(--white);">видны публично</strong> на блокчейне — любой может проверить</div>
+        </div>
+        <div class="icon-card" style="border-color:rgba(255,68,68,0.3);">
+          <span class="card-icon">🚫</span>
+          <div class="card-title">Без доступа создателей</div>
+          <div class="card-desc">Команда 2xSwap <strong style="color:var(--white);">НЕ имеет доступа</strong> к вашим деньгам. Только вы контролируете</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 8: КАК НАЧАТЬ ===== -->
+  <div class="slide" id="slide-8">
+    <div class="animate-in">
+      <div class="slide-title" style="text-align:center;">СЛАЙД 8</div>
+      <h2 class="section-title">Как начать — 4 шага</h2>
+    </div>
+
+    <div class="animate-in" style="margin-top:28px;width:100%;max-width:900px;">
+      <div class="steps-flow">
+        <div class="step-item">
+          <div class="step-circle">
+            🦊
+            <div class="step-number">1</div>
+          </div>
+          <div class="step-title">Создать кошелёк</div>
+          <div class="step-sub">Скачайте MetaMask — бесплатно, 5 минут</div>
+        </div>
+        <div class="step-connector">→</div>
+        <div class="step-item">
+          <div class="step-circle">
+            💵
+            <div class="step-number">2</div>
+          </div>
+          <div class="step-title">Купить USDC</div>
+          <div class="step-sub">1 USDC = $1. Стабильная монета, привязана к доллару</div>
+        </div>
+        <div class="step-connector">→</div>
+        <div class="step-item">
+          <div class="step-circle">
+            ➕
+            <div class="step-number">3</div>
+          </div>
+          <div class="step-title">Добавить в пул</div>
+          <div class="step-sub">Зайдите на 2xswap.com и нажмите «Добавить ликвидность»</div>
+        </div>
+        <div class="step-connector">→</div>
+        <div class="step-item">
+          <div class="step-circle">
+            💰
+            <div class="step-number">4</div>
+          </div>
+          <div class="step-title">Забрать когда хотите</div>
+          <div class="step-sub">Ваши средства + накопленная прибыль</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in" style="margin-top:28px;width:100%;max-width:750px;">
+      <div class="warning-box">
+        ⚠️ <strong>Важно знать:</strong> Часть средств может быть в активных сделках.
+        Обычно — дни или недели, максимум до 1 года. Планируйте заранее.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 9: РИСКИ ===== -->
+  <div class="slide" id="slide-9">
+    <div class="animate-in">
+      <div class="slide-title" style="text-align:center;">СЛАЙД 9</div>
+      <h2 class="section-title">Риски — честно</h2>
+    </div>
+
+    <div class="animate-in" style="margin-top:24px;width:100%;max-width:800px;">
+      <div class="risk-cards">
+        <div class="risk-card" style="border-color:rgba(255,68,68,0.25);">
+          <div class="risk-card-icon">📉</div>
+          <div class="risk-card-body">
+            <div class="risk-card-name" style="color:var(--red);">Рыночный риск</div>
+            <div class="risk-card-desc">При падении актива более чем на 50% пул начинает нести убытки</div>
+          </div>
+        </div>
+        <div class="risk-card" style="border-color:rgba(255,170,0,0.25);">
+          <div class="risk-card-icon">🔒</div>
+          <div class="risk-card-body">
+            <div class="risk-card-name" style="color:var(--warn);">Временная блокировка</div>
+            <div class="risk-card-desc">Средства в активных сделках недоступны до закрытия (дни — максимум 1 год)</div>
+          </div>
+        </div>
+        <div class="risk-card" style="border-color:rgba(136,153,170,0.25);">
+          <div class="risk-card-icon">⚙️</div>
+          <div class="risk-card-body">
+            <div class="risk-card-name" style="color:var(--secondary);">Технический риск</div>
+            <div class="risk-card-desc">Смарт-контракт прошёл аудит, но программный код может содержать ошибку</div>
+          </div>
+        </div>
+        <div class="risk-card" style="border-color:rgba(0,204,102,0.2);">
+          <div class="risk-card-icon">🌱</div>
+          <div class="risk-card-body">
+            <div class="risk-card-name" style="color:var(--green);">Ранняя стадия</div>
+            <div class="risk-card-desc">На старте мало сделок — доход может быть нестабильным и небольшим</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in" style="margin-top:24px;padding:14px 28px;background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.3);border-radius:100px;font-size:15px;font-weight:600;color:var(--warn);">
+      Участвуйте только свободными средствами, которые не понадобятся срочно
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 10: КОНТАКТ ===== -->
+  <div class="slide" id="slide-10">
+    <div class="animate-in">
+      <div class="contact-card">
+        <div class="q-title">Есть вопросы? 👋</div>
+        <div class="divider" style="margin:0 auto 28px;"></div>
+        <a href="mailto:didar@2xswap.com" class="contact-link">didar@2xswap.com</a>
+        <a href="https://2xswap.com" class="contact-link" style="color:var(--green);">2xswap.com</a>
+        <div class="contact-hint">Поможем с настройкой пошагово 🤝</div>
+      </div>
+    </div>
+    <div class="animate-in" style="margin-top:28px;text-align:center;">
+      <div style="font-size:13px;color:var(--secondary);">
+        Сделано с ❤️ командой 2xSwap
+      </div>
+    </div>
   </div>
 
 </div>
+<!-- ===== END SLIDES ===== -->
+
+<script>
+  const TOTAL = 10;
+  let current = 1;
+  let isAnimating = false;
+
+  function getSlide(n) {
+    return document.getElementById('slide-' + n);
+  }
+
+  function updateUI() {
+    document.getElementById('current-slide').textContent = current;
+    document.getElementById('progress-bar').style.width = (current / TOTAL * 100) + '%';
+    document.getElementById('nav-prev').classList.toggle('hidden', current === 1);
+    document.getElementById('nav-next').classList.toggle('hidden', current === TOTAL);
+  }
+
+  function navigate(dir) {
+    if (isAnimating) return;
+    const next = current + dir;
+    if (next < 1 || next > TOTAL) return;
+
+    isAnimating = true;
+
+    const currentSlide = getSlide(current);
+    const nextSlide = getSlide(next);
+
+    // Remove previous animation classes
+    nextSlide.querySelectorAll('.animate-in').forEach(el => {
+      el.style.opacity = '0';
+    });
+
+    // Exit current slide
+    currentSlide.classList.add(dir > 0 ? 'exit-left' : 'exit-right');
+
+    setTimeout(() => {
+      currentSlide.classList.remove('active', 'exit-left', 'exit-right');
+      currentSlide.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
+
+      // Set next slide starting position
+      nextSlide.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
+      nextSlide.style.transition = 'none';
+      nextSlide.classList.add('active');
+
+      // Re-enable animated elements
+      nextSlide.querySelectorAll('.animate-in').forEach(el => {
+        el.style.opacity = '';
+      });
+
+      requestAnimationFrame(() => {
+        nextSlide.style.transition = '';
+        requestAnimationFrame(() => {
+          nextSlide.style.transform = 'translateX(0)';
+        });
+      });
+
+      current = next;
+      updateUI();
+
+      setTimeout(() => { isAnimating = false; }, 520);
+    }, 300);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      navigate(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      navigate(-1);
+    }
+  });
+
+  // Click navigation (click right half → next, left half → prev)
+  document.getElementById('slides').addEventListener('click', (e) => {
+    // Don't navigate if clicking on nav arrows or links
+    if (e.target.closest('.nav-arrow') || e.target.closest('a')) return;
+    const midX = window.innerWidth / 2;
+    navigate(e.clientX > midX ? 1 : -1);
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      navigate(diff > 0 ? 1 : -1);
+    }
+  }, { passive: true });
+
+  // Init
+  updateUI();
+</script>
 </body>
 </html>
