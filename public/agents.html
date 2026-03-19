@@ -1299,7 +1299,9 @@
       <thead>
         <tr>
           <th>Leverage</th>
-          <th>LP Capital Deployed</th>
+          <th>Stop-Loss</th>
+          <th>LP Share</th>
+          <th>LP Capital</th>
           <th>LP Profit</th>
           <th>LP Return</th>
         </tr>
@@ -1307,27 +1309,34 @@
       <tbody>
         <tr>
           <td><span class="lev-cell">2x</span></td>
+          <td style="color:var(--secondary);">None</td>
+          <td style="color:var(--green);font-weight:700;">20%</td>
           <td>$10,000</td>
           <td class="profit-cell">$400</td>
           <td class="return-cell">4.0%</td>
         </tr>
         <tr>
           <td><span class="lev-cell">5x</span></td>
+          <td style="color:var(--warn);">-24%</td>
+          <td style="color:var(--warn);font-weight:700;">15%</td>
           <td>$40,000</td>
-          <td class="profit-cell">$1,000</td>
-          <td class="return-cell">2.5%</td>
+          <td class="profit-cell">$600</td>
+          <td class="return-cell">1.5%</td>
         </tr>
         <tr>
           <td><span class="lev-cell">10x</span></td>
+          <td style="color:var(--red);">-13%</td>
+          <td style="color:var(--red);font-weight:700;">10%</td>
           <td>$90,000</td>
-          <td class="profit-cell">$2,000</td>
-          <td class="return-cell">2.2%</td>
+          <td class="profit-cell">$900</td>
+          <td class="return-cell">1.0%</td>
         </tr>
       </tbody>
     </table>
 
     <div class="key-message animate-in" style="margin-top:20px">
-      Higher leverage = more LP capital deployed = <strong>more absolute profit</strong> but lower % return per trade.
+      <strong>Tighter stop-loss = less LP risk = lower LP share.</strong><br>
+      LP profit share is dynamic — it depends on the risk the strategy takes.
       More bots = more trades = <strong>compounding yield</strong>.
     </div>
 
